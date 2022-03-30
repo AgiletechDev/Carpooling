@@ -1,12 +1,11 @@
 import { Route, Routes } from 'react-router-dom';
-import { HomeScreen } from '../components/HomeScreen';
+import { AppScreen } from '../components/dashboard/AppScreen';
 
 export const DashboardRoutes = () => {
   return (
     <div>
       <Routes>
-        <Route path="home" element={<HomeScreen />} />
-        <Route path="/" element={<HomeScreen />} />
+        <Route path="/" element={<AppScreen />} />
       </Routes>
     </div>
   );

@@ -7,7 +7,6 @@ export const AuthRoutes = () => {
   return (
     <div>
       <Routes>
-        {/* <Route path='landing' element={<LandingScreen/>} /> */}
         <Route path="login" element={<LoginScreen />} />
         <Route path="register" element={<RegisterScreen />} />
       </Routes>
