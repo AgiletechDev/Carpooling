@@ -1,11 +1,15 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { startLogin } from '../../actions/auth';
 
 import { useForm } from '../../hooks/useForm';
 
 import './form.css';
 
 export const LoginScreen = () => {
+  const dispatch = useDispatch();
+
   const [formValues, handleInputChange] = useForm({ correo: '', password: '' });
 
   const { correo, password } = formValues;
@@ -13,6 +17,7 @@ export const LoginScreen = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formValues);
+    dispatch(startLogin(correo, password));
   };
 
   return (
