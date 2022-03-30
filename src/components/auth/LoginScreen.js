@@ -1,6 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { useForm } from '../../hooks/useForm';
+
+import './form.css';
 
 export const LoginScreen = () => {
   const [formValues, handleInputChange] = useForm({ correo: '', password: '' });
@@ -13,38 +16,52 @@ export const LoginScreen = () => {
   };
 
   return (
-    <div className="container text-center mt-5">
-      <h1>Login</h1>
-      <form className="mt-5" onSubmit={handleSubmit}>
-        <div className="row form-group justify-content-center mb-3">
-          <div className="col-6">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Correo"
-              name="correo"
-              value={correo}
-              onChange={handleInputChange}
-              autoComplete="off"
-            />
-          </div>
+    <div className="container text-center">
+      <div className="row align-items-center justify-content-center mt-5">
+        <div className="col-lg-5">
+          <form onSubmit={handleSubmit}>
+            <h3 className="mb-3">Login</h3>
+
+            <div className="form-group text-start mb-2">
+              <label className="form-label">Email</label>
+              <input
+                type="email"
+                className="form-control"
+                placeholder="Enter email"
+                name="correo"
+                value={correo}
+                onChange={handleInputChange}
+                autoComplete="off"
+              />
+            </div>
+
+            <div className="form-group text-start mb-4">
+              <label className="form-label">Password</label>
+              <input
+                type="password"
+                className="form-control"
+                placeholder="Enter password"
+                name="password"
+                value={password}
+                onChange={handleInputChange}
+              />
+            </div>
+
+            <div className="d-grid mb-3">
+              <button type="submit" className="btn btn-dark">
+                Login
+              </button>
+            </div>
+
+            <p className="text-end">
+              Don't have an account{' '}
+              <Link className="a-link" to="/auth/register">
+                register?
+              </Link>
+            </p>
+          </form>
         </div>
-        <div className="row form-group justify-content-center mb-3">
-          <div className="col-6">
-            <input
-              type="password"
-              className="form-control"
-              placeholder="Password"
-              name="password"
-              value={password}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-        <button className="btn btn-primary col-3" type="submit">
-          Login
-        </button>
-      </form>
+      </div>
     </div>
   );
 };
