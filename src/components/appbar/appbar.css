@@ -1,0 +1,9 @@
+.link-home {
+  text-decoration: none;
+  display: inline-block;
+}
+
+a svg {
+  display: inline-block;
+  vertical-align: middle;
+}
