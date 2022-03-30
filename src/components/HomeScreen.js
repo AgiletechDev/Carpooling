@@ -1,7 +1,8 @@
 import React from 'react';
 
 export const HomeScreen = () => {
-  <div>
+  return (
+    <div>
       <div className="container-fluid">
         <div className="row bg-primary justify-content-center text-light py-3">
           <div className="col-auto col-sm-6 text-last">
