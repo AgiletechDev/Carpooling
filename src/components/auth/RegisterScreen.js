@@ -91,7 +91,6 @@ export const RegisterScreen = () => {
     const isValid = validateForm();
 
     if (isValid) {
-      console.log(formValues);
       dispatch(startRegister(formValues));
     } else return;
   };
