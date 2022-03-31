@@ -1,3 +1,4 @@
+import { fetchSinToken } from '../helpers/fetch';
 import { types } from '../types/types';
 
 /*--PETICION HTTP SIMULADA--*/
@@ -46,15 +47,20 @@ export const authUser = (user, pass) => {
 
 export const startLogin = (correo, password) => {
   return async (dispatch) => {
-    // const resp = await fetch();
-    const resp = await dataRequest();
-    // const body = await resp.json();
-    localStorage.setItem('token', resp.token);
+    const resp = await fetchSinToken(
+      'auth/login',
+      { correo, password },
+      'POST'
+    );
+    const body = await resp.json();
+    console.log(body);
+
+    localStorage.setItem('token', body.token);
     localStorage.setItem('token-init-date', new Date().getTime());
     dispatch(
       login({
-        uid: resp.usuario.uid,
-        name: resp.usuario.nombre,
+        uid: body.usuario.uid,
+        name: body.usuario.nombre,
       })
     );
   };
@@ -62,17 +68,18 @@ export const startLogin = (correo, password) => {
 
 export const startRegister = (values) => {
   return async (dispatch) => {
-    // const resp = await fetch();
-    const resp = await dataRequest();
-    // const body = await resp.json();
-    localStorage.setItem('token', resp.token);
-    localStorage.setItem('token-init-date', new Date().getTime());
-    dispatch(
-      login({
-        uid: resp.usuario.uid,
-        name: resp.usuario.nombre,
-      })
-    );
+    const resp = await fetchSinToken('usuarios', values, 'POST');
+    const body = await resp.json();
+    console.log(body);
+
+    // localStorage.setItem('token', body.token);
+    // localStorage.setItem('token-init-date', new Date().getTime());
+    // dispatch(
+    //   login({
+    //     uid: body.usuario.uid,
+    //     name: body.usuario.nombre,
+    //   })
+    // );
   };
 };
 
