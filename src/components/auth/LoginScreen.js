@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import validator from 'validator'
+import GoogleLogin from 'react-google-login'
 import { GoogleLoginButton } from 'react-social-login-buttons'
 
-import { startLogin } from '../../actions/auth'
+import { startLogin, startLoginGoogle } from '../../actions/auth'
 import { useForm } from '../../hooks/useForm'
 
 import './form.css'
-import GoogleLogin from 'react-google-login'
 
 export const LoginScreen = () => {
   const dispatch = useDispatch()
@@ -43,11 +43,11 @@ export const LoginScreen = () => {
     } else return
   }
 
-  const handleGoogleLogin = () => {
-    console.log('click')
+  const handleGoogleLogin = (response) => {
+    dispatch(startLoginGoogle(response))
   }
 
-  const responseGoogle = (response) => {
+  const handleGoogleFail = (response) => {
     console.log(response)
   }
 
@@ -83,31 +83,36 @@ export const LoginScreen = () => {
               />
             </div>
 
-            <div className="d-grid mb-3">
+            <div className="d-grid">
               <button type="submit" className="btn btn-dark">
                 Login
               </button>
             </div>
+          </form>
 
-            <p className="text-end">
+          <div className="mt-5">
+            <hr />
+            <h5 className="mb-3">or connect with</h5>
+            <GoogleLogin
+              clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+              render={(renderProps) => (
+                <GoogleLoginButton
+                  onClick={renderProps.onClick}
+                  disabled={renderProps.disabled}
+                />
+              )}
+              onSuccess={handleGoogleLogin}
+              onFailure={handleGoogleFail}
+              cookiePolicy={'single_host_origin'}
+              isSignedIn={true}
+            />
+
+            <p className="text-end mt-3">
               Don't have an account{' '}
               <Link className="a-link" to="/auth/register">
                 register?
               </Link>
             </p>
-          </form>
-
-          <div className="mt-5">
-            <h3 className="mb-3">Social Login</h3>
-            <GoogleLoginButton onClick={handleGoogleLogin} />
-            <GoogleLogin
-              clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-              buttonText="Login with Google"
-              onSuccess={responseGoogle}
-              onFailure={responseGoogle}
-              cookiePolicy={'single_host_origin'}
-              isSignedIn={true}
-            />
           </div>
         </div>
       </div>
