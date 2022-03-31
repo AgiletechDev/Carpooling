@@ -84,12 +84,14 @@ export const startChecking = () => {
 
     localStorage.setItem('token', body.token);
     localStorage.setItem('token-init-date', new Date().getTime());
-    dispatch(
-      login({
-        uid: body.usuario.uid,
-        name: body.usuario.nombre,
-      })
-    );
+    // dispatch(
+    //   login({
+    //     uid: body.usuario.uid,
+    //     name: body.usuario.nombre,
+    //   })
+    // );
+
+    dispatch(checkingFinish());
 
     // if (body.ok) {
     //   localStorage.setItem('token', body.token);

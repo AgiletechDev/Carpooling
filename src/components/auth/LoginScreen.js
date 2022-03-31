@@ -1,8 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { startLogin } from '../../actions/auth';
+import {
+  FacebookLoginButton,
+  GoogleLoginButton,
+} from 'react-social-login-buttons';
 
+import { startLogin } from '../../actions/auth';
 import { useForm } from '../../hooks/useForm';
 
 import './form.css';
@@ -65,6 +69,12 @@ export const LoginScreen = () => {
               </Link>
             </p>
           </form>
+
+          <div className="mt-5">
+            <h3 className="mb-3">Social Login</h3>
+            <FacebookLoginButton className="mb-2" />
+            <GoogleLoginButton />
+          </div>
         </div>
       </div>
     </div>
