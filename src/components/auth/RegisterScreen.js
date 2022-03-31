@@ -11,12 +11,15 @@ import './form.css';
 
 import 'moment/locale/es';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { startRegister } from '../../actions/auth';
 moment.locale('es');
 registerLocale('es', es);
 
 const now = moment().minutes(0).seconds(0);
 
 export const RegisterScreen = () => {
+  const dispatch = useDispatch();
   // const [nameValid, setNameValid] = useState(true);
   // const [correoValid, setCorreoValid] = useState(true);
   // const [nicknameValid, setNicknameValid] = useState(true);
@@ -43,7 +46,6 @@ export const RegisterScreen = () => {
   } = formValues;
 
   const handleDateChange = (e) => {
-    console.log(e);
     handleInputChange({
       target: {
         name: 'fechaNacimiento',
@@ -73,6 +75,7 @@ export const RegisterScreen = () => {
     //   passwordValid
     // )
     console.log(formValues);
+    dispatch(startRegister(formValues));
   };
 
   return (

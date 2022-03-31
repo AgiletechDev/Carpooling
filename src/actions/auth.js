@@ -44,7 +44,7 @@ export const authUser = (user, pass) => {
   };
 };
 
-export const startLogin = (email, password) => {
+export const startLogin = (correo, password) => {
   return async (dispatch) => {
     // const resp = await fetch();
     const resp = await dataRequest();
@@ -60,15 +60,65 @@ export const startLogin = (email, password) => {
   };
 };
 
+export const startRegister = (values) => {
+  return async (dispatch) => {
+    // const resp = await fetch();
+    const resp = await dataRequest();
+    // const body = await resp.json();
+    localStorage.setItem('token', resp.token);
+    localStorage.setItem('token-init-date', new Date().getTime());
+    dispatch(
+      login({
+        uid: resp.usuario.uid,
+        name: resp.usuario.nombre,
+      })
+    );
+  };
+};
+
+export const startChecking = () => {
+  return async (dispatch) => {
+    // const resp = await fetchConToken('auth/renew');
+    // const body = await resp.json();
+    const body = await dataRequest();
+
+    localStorage.setItem('token', body.token);
+    localStorage.setItem('token-init-date', new Date().getTime());
+    dispatch(
+      login({
+        uid: body.usuario.uid,
+        name: body.usuario.nombre,
+      })
+    );
+
+    // if (body.ok) {
+    //   localStorage.setItem('token', body.token);
+    //   localStorage.setItem('token-init-date', new Date().getTime());
+    //   dispatch(
+    //     login({
+    //       uid: body.uid,
+    //       name: body.name,
+    //     })
+    //   );
+    // } else {
+    //   dispatch(checkingFinish());
+    // }
+  };
+};
+
+const checkingFinish = () => ({
+  type: types.authCheckingFinish,
+});
+
 const login = (user) => {
   return {
-    type: types.login,
+    type: types.authLogin,
     payload: user,
   };
 };
 
 export const logout = () => {
   return {
-    type: types.logout,
+    type: types.authLogout,
   };
 };

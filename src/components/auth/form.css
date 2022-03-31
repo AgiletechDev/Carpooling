@@ -3,5 +3,6 @@ p {
 }
 
 .a-link {
+  text-decoration: none;
   color: #167bff;
 }
