@@ -2,15 +2,13 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import validator from 'validator'
-import {
-  FacebookLoginButton,
-  GoogleLoginButton
-} from 'react-social-login-buttons'
+import { GoogleLoginButton } from 'react-social-login-buttons'
 
 import { startLogin } from '../../actions/auth'
 import { useForm } from '../../hooks/useForm'
 
 import './form.css'
+import GoogleLogin from 'react-google-login'
 
 export const LoginScreen = () => {
   const dispatch = useDispatch()
@@ -45,11 +43,12 @@ export const LoginScreen = () => {
     } else return
   }
 
-  const handleFacebookLogin = () => {
-    console.log('click')
-  }
   const handleGoogleLogin = () => {
     console.log('click')
+  }
+
+  const responseGoogle = (response) => {
+    console.log(response)
   }
 
   return (
@@ -100,11 +99,15 @@ export const LoginScreen = () => {
 
           <div className="mt-5">
             <h3 className="mb-3">Social Login</h3>
-            <FacebookLoginButton
-              className="mb-2"
-              onClick={handleFacebookLogin}
-            />
             <GoogleLoginButton onClick={handleGoogleLogin} />
+            <GoogleLogin
+              clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+              buttonText="Login with Google"
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
+              cookiePolicy={'single_host_origin'}
+              isSignedIn={true}
+            />
           </div>
         </div>
       </div>

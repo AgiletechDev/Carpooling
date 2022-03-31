@@ -7,7 +7,6 @@ export const startLogin = (correo, password) => {
   return async (dispatch) => {
     const resp = await fetchSinToken('auth/login', { correo, password }, 'POST')
     const body = await resp.json()
-    console.log(body)
 
     if (body.ok) {
       localStorage.setItem('token', body.token)
@@ -48,7 +47,6 @@ export const startChecking = () => {
   return async (dispatch) => {
     const resp = await fetchConToken('auth/renew')
     const body = await resp.json()
-    console.log(resp)
 
     if (body.ok) {
       localStorage.setItem('token', body.token)
@@ -69,15 +67,18 @@ const checkingFinish = () => ({
   type: types.authCheckingFinish
 })
 
-const login = (user) => {
-  return {
-    type: types.authLogin,
-    payload: user
+const login = (user) => ({
+  type: types.authLogin,
+  payload: user
+})
+
+export const startLogout = () => {
+  return (dispatch) => {
+    localStorage.clear()
+    dispatch(logout())
   }
 }
 
-export const logout = () => {
-  return {
-    type: types.authLogout
-  }
-}
+const logout = () => ({
+  type: types.authLogout
+})

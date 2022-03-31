@@ -1,5 +1,16 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { startLogout } from '../../actions/auth'
 
 export const AppScreen = () => {
-  return <div>AppScreen</div>
+  const dispatch = useDispatch()
+
+  const handleLogout = () => {
+    dispatch(startLogout())
+  }
+  return (
+    <div>
+      <button onClick={handleLogout}>Logout</button>
+    </div>
+  )
 }
