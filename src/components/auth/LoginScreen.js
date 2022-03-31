@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import validator from 'validator';
 import {
   FacebookLoginButton,
   GoogleLoginButton,
@@ -13,15 +14,42 @@ import './form.css';
 
 export const LoginScreen = () => {
   const dispatch = useDispatch();
-
+  const [correoValid, setCorreoValid] = useState(true);
+  const [passwordValid, setPasswordValid] = useState(true);
   const [formValues, handleInputChange] = useForm({ correo: '', password: '' });
 
   const { correo, password } = formValues;
 
+  const validateForm = () => {
+    let valid = true;
+
+    if (!validator.isEmail(correo)) {
+      setCorreoValid(false);
+      valid = valid && false;
+    } else setCorreoValid(true);
+
+    if (password.length < 6) {
+      setPasswordValid(false);
+      valid = valid && false;
+    } else setPasswordValid(true);
+
+    return valid;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formValues);
-    dispatch(startLogin(correo, password));
+    const isValid = validateForm();
+
+    if (isValid) {
+      dispatch(startLogin(correo, password));
+    } else return;
+  };
+
+  const handleFacebookLogin = () => {
+    console.log('click');
+  };
+  const handleGoogleLogin = () => {
+    console.log('click');
   };
 
   return (
@@ -35,7 +63,7 @@ export const LoginScreen = () => {
               <label className="form-label">Email</label>
               <input
                 type="email"
-                className="form-control"
+                className={`form-control ${!correoValid && 'is-invalid'}`}
                 placeholder="Enter email"
                 name="correo"
                 value={correo}
@@ -48,7 +76,7 @@ export const LoginScreen = () => {
               <label className="form-label">Password</label>
               <input
                 type="password"
-                className="form-control"
+                className={`form-control ${!passwordValid && 'is-invalid'}`}
                 placeholder="Enter password"
                 name="password"
                 value={password}
@@ -72,8 +100,11 @@ export const LoginScreen = () => {
 
           <div className="mt-5">
             <h3 className="mb-3">Social Login</h3>
-            <FacebookLoginButton className="mb-2" />
-            <GoogleLoginButton />
+            <FacebookLoginButton
+              className="mb-2"
+              onClick={handleFacebookLogin}
+            />
+            <GoogleLoginButton onClick={handleGoogleLogin} />
           </div>
         </div>
       </div>

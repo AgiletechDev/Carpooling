@@ -20,11 +20,11 @@ const now = moment().minutes(0).seconds(0);
 
 export const RegisterScreen = () => {
   const dispatch = useDispatch();
-  // const [nameValid, setNameValid] = useState(true);
-  // const [correoValid, setCorreoValid] = useState(true);
-  // const [nicknameValid, setNicknameValid] = useState(true);
-  // const [fechaNacimientoValid, setFechaNacimientoValid] = useState(true);
-  // const [passwordValid, setPasswordValid] = useState(true);
+  const [nameValid, setNameValid] = useState(true);
+  const [correoValid, setCorreoValid] = useState(true);
+  const [nicknameValid, setNicknameValid] = useState(true);
+  const [fechaNacimientoValid, setFechaNacimientoValid] = useState(true);
+  const [passwordValid, setPasswordValid] = useState(true);
   const [formValues, handleInputChange] = useForm({
     nombre: '',
     correo: '',
@@ -54,42 +54,59 @@ export const RegisterScreen = () => {
     });
   };
 
-  // const validateForm = () => {
-  //   const selectedDate = moment(fechaNacimiento);
-  //   if (nombre.trim().length < 2) setNameValid(false);
-  //   if (!validator.isEmail(correo)) setCorreoValid(false);
-  //   if (nickname.trim().length < 2) setNicknameValid(false);
-  //   if (Number(now.format('YYYY')) - Number(selectedDate.format('YYYY')) < 18)
-  //     setFechaNacimientoValid(false);
-  //   if (password !== password2 || password.length < 6) setPasswordValid(false);
-  // };
+  const validateForm = () => {
+    let valid = true;
+    const selectedDate = moment(fechaNacimiento);
+
+    if (nombre.trim().length < 2) {
+      setNameValid(false);
+      valid = valid && false;
+    } else setNameValid(true);
+
+    if (!validator.isEmail(correo)) {
+      setCorreoValid(false);
+      valid = valid && false;
+    } else setCorreoValid(true);
+
+    if (nickname.trim().length < 2) {
+      setNicknameValid(false);
+      valid = valid && false;
+    } else setNicknameValid(true);
+
+    if (Number(now.format('YYYY')) - Number(selectedDate.format('YYYY')) < 18) {
+      setFechaNacimientoValid(false);
+      valid = valid && false;
+    } else setFechaNacimientoValid(true);
+
+    if (password !== password2 || password.length < 6) {
+      setPasswordValid(false);
+      valid = valid && false;
+    } else setPasswordValid(true);
+
+    return valid;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // validateForm();
-    // if (
-    //   nameValid &&
-    //   correoValid &&
-    //   nicknameValid &&
-    //   fechaNacimientoValid &&
-    //   passwordValid
-    // )
-    console.log(formValues);
-    dispatch(startRegister(formValues));
+    const isValid = validateForm();
+
+    if (isValid) {
+      dispatch(startRegister(formValues));
+    } else return;
   };
 
   return (
     <div className="container text-center">
       <div className="row align-items-center justify-content-center mt-5">
         <div className="col-lg-5">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} noValidate>
             <h3>Registro</h3>
 
             <div className="form-group text-start mb-2">
               <label className="form-label">Name</label>
               <input
                 type="text"
-                className="form-control"
+                className={`form-control ${!nameValid && 'is-invalid'}`}
                 placeholder="Enter name"
                 name="nombre"
                 value={nombre}
@@ -102,7 +119,7 @@ export const RegisterScreen = () => {
               <label className="form-label">Email</label>
               <input
                 type="email"
-                className="form-control"
+                className={`form-control ${!correoValid && 'is-invalid'}`}
                 placeholder="Enter email"
                 name="correo"
                 value={correo}
@@ -115,7 +132,7 @@ export const RegisterScreen = () => {
               <label className="form-label">Nickname</label>
               <input
                 type="text"
-                className="form-control"
+                className={`form-control ${!nicknameValid && 'is-invalid'}`}
                 placeholder="Enter nickname"
                 name="nickname"
                 value={nickname}
@@ -127,7 +144,9 @@ export const RegisterScreen = () => {
             <div className="form-group text-start mb-2">
               <label className="form-label">Date of birth</label>
               <DatePicker
-                className="form-control"
+                className={`form-control ${
+                  !fechaNacimientoValid && 'is-invalid'
+                }`}
                 locale="es"
                 dateFormat="dd/MM/yyyy"
                 peekNextMonth
@@ -143,7 +162,7 @@ export const RegisterScreen = () => {
               <label className="form-label">Password</label>
               <input
                 type="password"
-                className="form-control"
+                className={`form-control ${!passwordValid && 'is-invalid'}`}
                 placeholder="Enter password"
                 name="password"
                 value={password}
@@ -155,7 +174,7 @@ export const RegisterScreen = () => {
               <label className="form-label">Confirm password</label>
               <input
                 type="password"
-                className="form-control"
+                className={`form-control ${!passwordValid && 'is-invalid'}`}
                 placeholder="Confirm password"
                 name="password2"
                 value={password2}
