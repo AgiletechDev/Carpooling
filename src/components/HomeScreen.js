@@ -1,5 +1,5 @@
-import React from 'react';
-import { Appbar } from './appbar/Appbar';
+import React from 'react'
+import { Appbar } from './appbar/Appbar'
 
 export const HomeScreen = () => {
   return (
@@ -107,5 +107,5 @@ export const HomeScreen = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

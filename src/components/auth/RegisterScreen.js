@@ -1,30 +1,30 @@
-import React, { useState } from 'react';
-import DatePicker, { registerLocale } from 'react-datepicker';
-import es from 'date-fns/locale/es';
-import validator from 'validator';
-import moment from 'moment';
+import React, { useState } from 'react'
+import DatePicker, { registerLocale } from 'react-datepicker'
+import es from 'date-fns/locale/es'
+import validator from 'validator'
+import moment from 'moment'
 
-import { useForm } from '../../hooks/useForm';
+import { useForm } from '../../hooks/useForm'
 
-import 'react-datepicker/dist/react-datepicker.css';
-import './form.css';
+import 'react-datepicker/dist/react-datepicker.css'
+import './form.css'
 
-import 'moment/locale/es';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { startRegister } from '../../actions/auth';
-moment.locale('es');
-registerLocale('es', es);
+import 'moment/locale/es'
+import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { startRegister } from '../../actions/auth'
+moment.locale('es')
+registerLocale('es', es)
 
-const now = moment().minutes(0).seconds(0);
+const now = moment().minutes(0).seconds(0)
 
 export const RegisterScreen = () => {
-  const dispatch = useDispatch();
-  const [nameValid, setNameValid] = useState(true);
-  const [correoValid, setCorreoValid] = useState(true);
-  const [nicknameValid, setNicknameValid] = useState(true);
-  const [fechaNacimientoValid, setFechaNacimientoValid] = useState(true);
-  const [passwordValid, setPasswordValid] = useState(true);
+  const dispatch = useDispatch()
+  const [nameValid, setNameValid] = useState(true)
+  const [correoValid, setCorreoValid] = useState(true)
+  const [nicknameValid, setNicknameValid] = useState(true)
+  const [fechaNacimientoValid, setFechaNacimientoValid] = useState(true)
+  const [passwordValid, setPasswordValid] = useState(true)
   const [formValues, handleInputChange] = useForm({
     nombre: '',
     correo: '',
@@ -32,8 +32,8 @@ export const RegisterScreen = () => {
     fechaNacimiento: now.toDate(),
     password: '',
     password2: '',
-    rol: 'USER_ROLE',
-  });
+    rol: 'USER_ROLE'
+  })
 
   const {
     nombre,
@@ -42,58 +42,58 @@ export const RegisterScreen = () => {
     fechaNacimiento,
     password,
     password2,
-    rol,
-  } = formValues;
+    rol
+  } = formValues
 
   const handleDateChange = (e) => {
     handleInputChange({
       target: {
         name: 'fechaNacimiento',
-        value: e,
-      },
-    });
-  };
+        value: e
+      }
+    })
+  }
 
   const validateForm = () => {
-    let valid = true;
-    const selectedDate = moment(fechaNacimiento);
+    let valid = true
+    const selectedDate = moment(fechaNacimiento)
 
     if (nombre.trim().length < 2) {
-      setNameValid(false);
-      valid = valid && false;
-    } else setNameValid(true);
+      setNameValid(false)
+      valid = valid && false
+    } else setNameValid(true)
 
     if (!validator.isEmail(correo)) {
-      setCorreoValid(false);
-      valid = valid && false;
-    } else setCorreoValid(true);
+      setCorreoValid(false)
+      valid = valid && false
+    } else setCorreoValid(true)
 
     if (nickname.trim().length < 2) {
-      setNicknameValid(false);
-      valid = valid && false;
-    } else setNicknameValid(true);
+      setNicknameValid(false)
+      valid = valid && false
+    } else setNicknameValid(true)
 
     if (Number(now.format('YYYY')) - Number(selectedDate.format('YYYY')) < 18) {
-      setFechaNacimientoValid(false);
-      valid = valid && false;
-    } else setFechaNacimientoValid(true);
+      setFechaNacimientoValid(false)
+      valid = valid && false
+    } else setFechaNacimientoValid(true)
 
     if (password !== password2 || password.length < 6) {
-      setPasswordValid(false);
-      valid = valid && false;
-    } else setPasswordValid(true);
+      setPasswordValid(false)
+      valid = valid && false
+    } else setPasswordValid(true)
 
-    return valid;
-  };
+    return valid
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    const isValid = validateForm();
+    e.preventDefault()
+    const isValid = validateForm()
 
     if (isValid) {
-      dispatch(startRegister(formValues));
-    } else return;
-  };
+      dispatch(startRegister(formValues))
+    } else return
+  }
 
   return (
     <div className="container text-center">
@@ -211,5 +211,5 @@ export const RegisterScreen = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

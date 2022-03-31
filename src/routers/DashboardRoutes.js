@@ -1,5 +1,5 @@
-import { Route, Routes } from 'react-router-dom';
-import { AppScreen } from '../components/dashboard/AppScreen';
+import { Route, Routes } from 'react-router-dom'
+import { AppScreen } from '../components/dashboard/AppScreen'
 
 export const DashboardRoutes = () => {
   return (
@@ -8,5 +8,5 @@ export const DashboardRoutes = () => {
         <Route path="/" element={<AppScreen />} />
       </Routes>
     </div>
-  );
-};
+  )
+}

@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-import './appbar.css';
+import './appbar.css'
 
 export const Appbar = () => {
   return (
@@ -60,5 +60,5 @@ export const Appbar = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

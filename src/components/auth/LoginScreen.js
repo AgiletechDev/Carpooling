@@ -1,56 +1,56 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import validator from 'validator';
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
+import validator from 'validator'
 import {
   FacebookLoginButton,
-  GoogleLoginButton,
-} from 'react-social-login-buttons';
+  GoogleLoginButton
+} from 'react-social-login-buttons'
 
-import { startLogin } from '../../actions/auth';
-import { useForm } from '../../hooks/useForm';
+import { startLogin } from '../../actions/auth'
+import { useForm } from '../../hooks/useForm'
 
-import './form.css';
+import './form.css'
 
 export const LoginScreen = () => {
-  const dispatch = useDispatch();
-  const [correoValid, setCorreoValid] = useState(true);
-  const [passwordValid, setPasswordValid] = useState(true);
-  const [formValues, handleInputChange] = useForm({ correo: '', password: '' });
+  const dispatch = useDispatch()
+  const [correoValid, setCorreoValid] = useState(true)
+  const [passwordValid, setPasswordValid] = useState(true)
+  const [formValues, handleInputChange] = useForm({ correo: '', password: '' })
 
-  const { correo, password } = formValues;
+  const { correo, password } = formValues
 
   const validateForm = () => {
-    let valid = true;
+    let valid = true
 
     if (!validator.isEmail(correo)) {
-      setCorreoValid(false);
-      valid = valid && false;
-    } else setCorreoValid(true);
+      setCorreoValid(false)
+      valid = valid && false
+    } else setCorreoValid(true)
 
     if (password.length < 6) {
-      setPasswordValid(false);
-      valid = valid && false;
-    } else setPasswordValid(true);
+      setPasswordValid(false)
+      valid = valid && false
+    } else setPasswordValid(true)
 
-    return valid;
-  };
+    return valid
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    const isValid = validateForm();
+    e.preventDefault()
+    const isValid = validateForm()
 
     if (isValid) {
-      dispatch(startLogin(correo, password));
-    } else return;
-  };
+      dispatch(startLogin(correo, password))
+    } else return
+  }
 
   const handleFacebookLogin = () => {
-    console.log('click');
-  };
+    console.log('click')
+  }
   const handleGoogleLogin = () => {
-    console.log('click');
-  };
+    console.log('click')
+  }
 
   return (
     <div className="container text-center">
@@ -109,5 +109,5 @@ export const LoginScreen = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

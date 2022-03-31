@@ -1,23 +1,23 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import { startChecking } from '../actions/auth';
-import { HomeScreen } from '../components/HomeScreen';
-import { AuthRoutes } from './AuthRoutes';
-import { DashboardRoutes } from './DashboardRoutes';
-import { PrivateRoute } from './PrivateRoute';
-import { PublicRoute } from './PublicRoute';
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Routes, Route, BrowserRouter } from 'react-router-dom'
+import { startChecking } from '../actions/auth'
+import { HomeScreen } from '../components/HomeScreen'
+import { AuthRoutes } from './AuthRoutes'
+import { DashboardRoutes } from './DashboardRoutes'
+import { PrivateRoute } from './PrivateRoute'
+import { PublicRoute } from './PublicRoute'
 
 export const AppRouter = () => {
-  const dispatch = useDispatch();
-  const { checking } = useSelector((state) => state.auth);
+  const dispatch = useDispatch()
+  const { checking } = useSelector((state) => state.auth)
 
   useEffect(() => {
-    dispatch(startChecking());
-  }, [dispatch]);
+    dispatch(startChecking())
+  }, [dispatch])
 
   if (checking) {
-    return <h5>Espere...</h5>;
+    return <h5>Espere...</h5>
   }
 
   return (
@@ -49,5 +49,5 @@ export const AppRouter = () => {
         />
       </Routes>
     </BrowserRouter>
-  );
-};
+  )
+}

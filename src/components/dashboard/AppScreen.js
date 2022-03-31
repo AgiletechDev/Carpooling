@@ -1,5 +1,5 @@
-import React from 'react';
+import React from 'react'
 
 export const AppScreen = () => {
-  return <div>AppScreen</div>;
-};
+  return <div>AppScreen</div>
+}

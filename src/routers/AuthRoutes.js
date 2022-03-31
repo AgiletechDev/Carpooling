@@ -1,7 +1,7 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom'
 
-import { LoginScreen } from '../components/auth/LoginScreen';
-import { RegisterScreen } from '../components/auth/RegisterScreen';
+import { LoginScreen } from '../components/auth/LoginScreen'
+import { RegisterScreen } from '../components/auth/RegisterScreen'
 
 export const AuthRoutes = () => {
   return (
@@ -11,5 +11,5 @@ export const AuthRoutes = () => {
         <Route path="register" element={<RegisterScreen />} />
       </Routes>
     </div>
-  );
-};
+  )
+}
