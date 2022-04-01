@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Tab, Tabs } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
-import { BuscarScreen } from './BuscarScreen'
-import { CrearScreen } from './CrearScreen'
+import { BuscarScreen } from './home/BuscarScreen'
+import { CrearScreen } from './home/CrearScreen'
+import { RealizadoList } from './realizados/RealizadoList'
 
 export const AppScreen = () => {
   const { rol } = useSelector((state) => state.auth)
@@ -29,6 +30,9 @@ export const AppScreen = () => {
           >
             <BuscarScreen />
           </div>
+        </Tab>
+        <Tab eventKey="realizados" title="Realizados">
+          <RealizadoList />
         </Tab>
       </Tabs>
     </div>

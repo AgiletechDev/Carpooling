@@ -3,7 +3,7 @@ import DatePicker, { registerLocale } from 'react-datepicker'
 import es from 'date-fns/locale/es'
 import moment from 'moment'
 
-import { useForm } from '../../hooks/useForm'
+import { useForm } from '../../../hooks/useForm'
 
 import 'react-datepicker/dist/react-datepicker.css'
 
@@ -21,7 +21,7 @@ export const CrearScreen = () => {
   const [hastaValid, setHastaValid] = useState(true)
   const [fechaValid, setFechaValid] = useState(true)
   const [precioValid, setPrecioValid] = useState(true)
-  const [pasajerosValid, setPasajerosValid] = useState(true)
+  const [asientosValid, setAsientosValid] = useState(true)
   const [vehiculoValid, setVehiculoValid] = useState(true)
 
   const [formValues1, handleInputChange1] = useForm({
@@ -34,12 +34,12 @@ export const CrearScreen = () => {
 
   const [formValues2, handleInputChange2] = useForm({
     precio: '',
-    pasajeros: '',
+    asientos: '',
     vehiculo: '',
     detalles: ''
   })
 
-  const { precio, pasajeros, vehiculo, detalles } = formValues2
+  const { precio, asientos, vehiculo, detalles } = formValues2
 
   const handleDateChange = (e) => {
     handleInputChange1({
@@ -52,6 +52,7 @@ export const CrearScreen = () => {
 
   const validateForm1 = () => {
     let valid = true
+    const selectedDate = moment(fecha)
 
     if (desde.trim().length < 2) {
       setDesdeValid(false)
@@ -63,7 +64,10 @@ export const CrearScreen = () => {
       valid = valid && false
     } else setHastaValid(true)
 
-    //TODO: validar fecha y hora
+    if (selectedDate.diff(now, 'days') < 1) {
+      setFechaValid(false)
+      valid = valid && false
+    } else setFechaValid(true)
 
     return valid
   }
@@ -76,10 +80,10 @@ export const CrearScreen = () => {
       valid = valid && false
     } else setPrecioValid(true)
 
-    if (pasajeros.trim().length < 1 || Number(pasajeros.trim()) < 0) {
-      setPasajerosValid(false)
+    if (asientos.trim().length < 1 || Number(asientos.trim()) < 0) {
+      setAsientosValid(false)
       valid = valid && false
-    } else setPasajerosValid(true)
+    } else setAsientosValid(true)
 
     if (vehiculo.trim().length < 2) {
       setVehiculoValid(false)
@@ -168,7 +172,7 @@ export const CrearScreen = () => {
                 </div>
 
                 <div className="d-grid">
-                  <button type="submit" className="btn btn-dark">
+                  <button type="submit" className="btn btn-primary">
                     Continuar
                   </button>
                 </div>
@@ -204,12 +208,10 @@ export const CrearScreen = () => {
                   <label className="form-label">Pasajeros</label>
                   <input
                     type="text"
-                    className={`form-control ${
-                      !pasajerosValid && 'is-invalid'
-                    }`}
+                    className={`form-control ${!asientosValid && 'is-invalid'}`}
                     placeholder="Pasajeros"
-                    name="pasajeros"
-                    value={pasajeros}
+                    name="asientos"
+                    value={asientos}
                     onChange={handleInputChange2}
                     autoComplete="off"
                   />
@@ -242,11 +244,11 @@ export const CrearScreen = () => {
                 </div>
 
                 <div className="d-grid gap-2">
-                  <button type="submit" className="btn btn-dark">
+                  <button type="submit" className="btn btn-primary">
                     Continuar
                   </button>
 
-                  <button onClick={handleBack} className="btn btn-dark">
+                  <button onClick={handleBack} className="btn btn-secondary">
                     Volver
                   </button>
                 </div>
@@ -268,17 +270,17 @@ export const CrearScreen = () => {
               <p>Información del auto</p>
               <p>{precio}</p>
               <p>Por pasajero</p>
-              <p>{pasajeros}</p>
+              <p>{asientos}</p>
               <p>{vehiculo}</p>
               <p>Detalles</p>
               <p>{detalles !== '' ? detalles : 'Sin detalles'}</p>
 
               <div className="d-grid gap-2">
-                <button onClick={handleFinalSubmit} className="btn btn-dark">
+                <button onClick={handleFinalSubmit} className="btn btn-success">
                   Confirmar
                 </button>
 
-                <button onClick={handleBack} className="btn btn-dark">
+                <button onClick={handleBack} className="btn btn-secondary">
                   Volver
                 </button>
               </div>
@@ -290,62 +292,7 @@ export const CrearScreen = () => {
     default:
       return (
         <div className="container mt-3 text-center">
-          <div className="row align-items-center justify-content-center mt-5">
-            <div className="col-lg-5">
-              <form onSubmit={handleSubmit1}>
-                <h3 className="mb-3">Encuentro</h3>
-
-                <div className="form-group text-start mb-2">
-                  <label className="form-label">Desde</label>
-                  <input
-                    type="text"
-                    className={`form-control ${!desdeValid && 'is-invalid'}`}
-                    placeholder="Desde"
-                    name="desde"
-                    value={desde}
-                    onChange={handleInputChange1}
-                    autoComplete="off"
-                  />
-                </div>
-
-                <div className="form-group text-start mb-2">
-                  <label className="form-label">Hasta</label>
-                  <input
-                    type="text"
-                    className={`form-control ${!hastaValid && 'is-invalid'}`}
-                    placeholder="Hasta"
-                    name="hasta"
-                    value={hasta}
-                    onChange={handleInputChange1}
-                    autoComplete="off"
-                  />
-                </div>
-
-                <div className="form-group text-start mb-4">
-                  <label className="form-label">Fecha y hora</label>
-                  <DatePicker
-                    className={`form-control ${!fechaValid && 'is-invalid'}`}
-                    locale="es"
-                    dateFormat="dd/MM/yyyy, hh:mm:aa"
-                    peekNextMonth
-                    showMonthDropdown
-                    showYearDropdown
-                    dropdownMode="select"
-                    selected={fecha}
-                    showTimeSelect
-                    timeIntervals={15}
-                    onChange={handleDateChange}
-                  />
-                </div>
-
-                <div className="d-grid">
-                  <button type="submit" className="btn btn-dark">
-                    Continuar
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
+          <h1>Fail</h1>
         </div>
       )
   }
