@@ -3,16 +3,17 @@ import DatePicker, { registerLocale } from 'react-datepicker'
 import es from 'date-fns/locale/es'
 import validator from 'validator'
 import moment from 'moment'
+import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 import { useForm } from '../../hooks/useForm'
+import { startRegister } from '../../actions/auth'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import './form.css'
 
 import 'moment/locale/es'
-import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { startRegister } from '../../actions/auth'
+
 moment.locale('es')
 registerLocale('es', es)
 

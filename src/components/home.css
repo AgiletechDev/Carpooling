@@ -1,0 +1,25 @@
+.home-container {
+  height: 100vh;
+}
+
+.home-form {
+  height: 55%;
+  background-image: url('https://di-uploads-development.s3.amazonaws.com/keffermazda/uploads/2015/06/teen-driver-1024x469.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.home-form-row,
+.home-footer-row {
+  height: 100%;
+}
+
+.home-footer {
+  height: 38%;
+}
+
+.car-img {
+  background-image: url('https://accept.aseanenergy.org/wp-content/uploads/2020/01/carpooling-1.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}

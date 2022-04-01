@@ -19,6 +19,12 @@ export const authReducer = (state = initState, action) => {
         ...state,
         checking: false
       }
+    case types.authUpdate:
+      return {
+        ...state,
+        rol: action.payload.rol,
+        data: action.payload
+      }
 
     default:
       return state

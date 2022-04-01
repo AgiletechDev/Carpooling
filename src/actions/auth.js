@@ -7,6 +7,7 @@ export const startLogin = (correo, password) => {
   return async (dispatch) => {
     const resp = await fetchSinToken('auth/login', { correo, password }, 'POST')
     const body = await resp.json()
+    console.log(body)
 
     if (body.ok) {
       localStorage.setItem('token', body.token)
@@ -14,7 +15,9 @@ export const startLogin = (correo, password) => {
       dispatch(
         login({
           uid: body.usuario.uid,
-          name: body.usuario.nombre
+          name: body.usuario.nombre,
+          rol: body.usuario.rol,
+          data: body.usuario
         })
       )
     } else {
@@ -25,7 +28,6 @@ export const startLogin = (correo, password) => {
 
 export const startLoginGoogle = (googleResponse) => {
   return async (dispatch) => {
-    console.log(googleResponse.tokenId)
     const resp = await fetchSinToken(
       'auth/google',
       { id_token: googleResponse.tokenId },
@@ -39,7 +41,9 @@ export const startLoginGoogle = (googleResponse) => {
       dispatch(
         login({
           uid: body.usuario.uid,
-          name: body.usuario.nombre
+          name: body.usuario.nombre,
+          rol: body.usuario.rol,
+          data: body.usuario
         })
       )
     } else {
@@ -59,7 +63,9 @@ export const startRegister = (values) => {
       dispatch(
         login({
           uid: body.usuario.uid,
-          name: body.usuario.nombre
+          name: body.usuario.nombre,
+          rol: body.usuario.rol,
+          data: body.usuario
         })
       )
     } else {
@@ -79,7 +85,9 @@ export const startChecking = () => {
       dispatch(
         login({
           uid: body.usuario.uid,
-          name: body.usuario.nombre
+          name: body.usuario.nombre,
+          rol: body.usuario.rol,
+          data: body.usuario
         })
       )
     } else {
@@ -106,4 +114,17 @@ export const startLogout = () => {
 
 const logout = () => ({
   type: types.authLogout
+})
+
+export const startUpdateUser = (uid, data) => {
+  return async (dispatch) => {
+    const resp = await fetchConToken(`usuarios/${uid}`, data, 'PUT')
+    const body = await resp.json()
+    dispatch(updateUser(body))
+  }
+}
+
+const updateUser = (user) => ({
+  type: types.authUpdate,
+  payload: user
 })

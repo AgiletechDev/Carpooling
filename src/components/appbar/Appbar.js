@@ -1,14 +1,23 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { startLogout } from '../../actions/auth'
 
 import './appbar.css'
 
 export const Appbar = () => {
+  const dispatch = useDispatch()
+  const { uid } = useSelector((state) => state.auth)
+
+  const handleLogout = () => {
+    dispatch(startLogout())
+  }
+
   return (
     <div className="container-fluid">
       <div className="row bg-primary justify-content-center text-light py-3">
         <div className="col-auto col-sm-6 text-last">
-          <Link to="/" className="text-light link-home">
+          <Link to={!!uid ? '/' : '/home'} className="text-light link-home">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -23,7 +32,22 @@ export const Appbar = () => {
           </Link>
         </div>
         <div className="col-auto">
-          <Link to="/" className="text-light link-home">
+          <Link
+            to="/auth/login"
+            className="text-light link-home"
+            style={{
+              display: `${!!uid ? 'none' : ''}`
+            }}
+          >
+            Login
+          </Link>
+          <Link
+            to="/profile"
+            className="text-light link-home"
+            style={{
+              display: `${!!uid ? '' : 'none'}`
+            }}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -42,7 +66,22 @@ export const Appbar = () => {
           </Link>
         </div>
         <div className="col-auto position-relative">
-          <Link to="/" className="text-light link-home">
+          <Link
+            to="/auth/register"
+            className="text-light link-home"
+            style={{
+              display: `${!!uid ? 'none' : ''}`
+            }}
+          >
+            Register
+          </Link>
+          <Link
+            to="/"
+            className="text-light link-home"
+            style={{
+              display: `${!!uid ? '' : 'none'}`
+            }}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -57,6 +96,17 @@ export const Appbar = () => {
               +99
             </span>
           </Link>
+        </div>
+        <div className="col-auto">
+          <button
+            className="btn text-light link-home ms-2 p-0"
+            style={{
+              display: `${!!uid ? '' : 'none'}`
+            }}
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
         </div>
       </div>
     </div>

@@ -1,12 +1,12 @@
 import React from 'react'
-import { Appbar } from './appbar/Appbar'
+
+import './home.css'
 
 export const HomeScreen = () => {
   return (
-    <div>
-      <Appbar />
-      <div className="container-fluid">
-        <div className="row bg-info pt-5 pb-3 justify-content-center">
+    <div className="home-container">
+      <div className="container-fluid home-form">
+        <div className="row pt-5 pb-3 justify-content-center home-form-row">
           <div className="col-auto">
             <div className="bg-light text-dark rounded-3 p-3 mb-3">
               <div className="my-2">
@@ -93,9 +93,9 @@ export const HomeScreen = () => {
         </div>
       </div>
 
-      <div className="container-fluid">
-        <div className="row bg-light py-5 justify-content-center">
-          <div className="col-auto col-4 border border-success"></div>
+      <div className="container-fluid home-footer">
+        <div className="row bg-light py-5 justify-content-center home-footer-row">
+          <div className="col-auto col-4 car-img"></div>
           <div className="col-auto">
             <p className="h2 text-primary">¿Cansado de viajar solo?</p>
             <ul className="list-unstyled text-primary text-center">
