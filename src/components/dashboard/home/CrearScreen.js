@@ -14,7 +14,7 @@ import { startCrearViaje } from '../../../actions/viajes'
 moment.locale('es')
 registerLocale('es', es)
 
-const now = moment().minutes(0).seconds(0)
+const now = moment()
 
 export const CrearScreen = () => {
   const dispatch = useDispatch()
@@ -27,7 +27,7 @@ export const CrearScreen = () => {
   const [asientosValid, setAsientosValid] = useState(true)
   const [vehiculoValid, setVehiculoValid] = useState(true)
 
-  const [formValues1, handleInputChange1] = useForm({
+  const [formValues1, handleInputChange1, reset1] = useForm({
     desde: '',
     hasta: '',
     fecha: now.toDate()
@@ -35,7 +35,7 @@ export const CrearScreen = () => {
 
   const { desde, hasta, fecha } = formValues1
 
-  const [formValues2, handleInputChange2] = useForm({
+  const [formValues2, handleInputChange2, reset2] = useForm({
     precio: '',
     asientos: '',
     vehiculo: '',
@@ -67,7 +67,7 @@ export const CrearScreen = () => {
       valid = valid && false
     } else setHastaValid(true)
 
-    if (selectedDate.diff(now, 'days') < 1) {
+    if (selectedDate.isBefore(now)) {
       setFechaValid(false)
       valid = valid && false
     } else setFechaValid(true)
@@ -120,6 +120,9 @@ export const CrearScreen = () => {
 
   const handleFinalSubmit = () => {
     dispatch(startCrearViaje({ ...formValues1, ...formValues2 }))
+    setStep(1)
+    reset1()
+    reset2()
   }
 
   switch (step) {

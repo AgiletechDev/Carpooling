@@ -1,34 +1,92 @@
+import moment from 'moment'
 import React from 'react'
 import { Card, Col, Row } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
 
-export const ViajesItem = () => {
+import { AiOutlineClockCircle } from 'react-icons/ai'
+import { FaMapMarkerAlt, FaCar, FaDollarSign, FaRegUser } from 'react-icons/fa'
+import { openDetallesModal, openEditarModal } from '../../actions/ui'
+import { setActiveViaje } from '../../actions/viajes'
+
+export const ViajesItem = (viaje) => {
+  const dispatch = useDispatch()
+  const { rol } = useSelector((state) => state.auth)
+  const { asientos, desde, fecha, hasta, precio, vehiculo, realizado } = viaje
+  const date = moment(fecha)
+
+  const handleOpenDetalles = () => {
+    dispatch(setActiveViaje(viaje))
+    dispatch(openDetallesModal())
+  }
+
+  const handleOpenEditar = () => {
+    dispatch(setActiveViaje(viaje))
+    dispatch(openEditarModal())
+  }
+
   return (
-    <Card style={{ width: '26rem' }} className="shadow-sm m-3 bg-body rounded">
+    <Card style={{ width: '22rem' }} className="shadow-sm m-3 bg-body rounded">
       <Card.Body>
         <Row>
           <Col xs={8} className="border-end">
-            <p>Sabado, Abril 2, 2022 10:00 AM</p>
-            <p>Mar de la Plata, Provincia de Buenos Aires, Argentina</p>
-            <p>Buebos Aires, CABA, Argentina</p>
-            <p>Ford</p>
+            <p>
+              <AiOutlineClockCircle /> {date.format('D MMMM YYYY, h:mm a')}
+            </p>
+            <p>
+              <FaMapMarkerAlt /> {desde}
+            </p>
+            <p>
+              <FaMapMarkerAlt /> {hasta}
+            </p>
+            <p>
+              <FaCar /> {vehiculo}
+            </p>
           </Col>
           <Col className="border-start">
-            <p>100</p>
+            <p>
+              <FaDollarSign /> {precio}
+            </p>
             <p>Por pasajero</p>
-            <p>4</p>
+            <p>
+              <FaRegUser /> {asientos}
+            </p>
           </Col>
         </Row>
       </Card.Body>
       <Card.Footer className="d-flex justify-content-evenly">
-        <button type="button" className="btn btn-primary">
-          Detalles
-        </button>
-        <button type="button" className="btn btn-success">
-          Solicitudes
-        </button>
-        <button type="button" className="btn btn-warning">
-          Editar
-        </button>
+        <div>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={handleOpenDetalles}
+          >
+            Detalles
+          </button>
+        </div>
+
+        <div
+          style={{
+            display: `${rol === 'CONDUCTOR_ROLE' && !realizado ? '' : 'none'}`
+          }}
+        >
+          <button type="button" className="btn btn-success">
+            Solicitudes
+          </button>
+        </div>
+
+        <div
+          style={{
+            display: `${rol === 'CONDUCTOR_ROLE' && !realizado ? '' : 'none'}`
+          }}
+        >
+          <button
+            type="button"
+            className="btn btn-warning"
+            onClick={handleOpenEditar}
+          >
+            Editar
+          </button>
+        </div>
       </Card.Footer>
     </Card>
   )

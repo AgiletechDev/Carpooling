@@ -54,7 +54,7 @@ export const LoginScreen = () => {
   return (
     <div className="container text-center">
       <div className="row align-items-center justify-content-center mt-5">
-        <div className="col-lg-5">
+        <div className="col-lg-5 shadow rounded form-container">
           <form onSubmit={handleSubmit}>
             <h3 className="mb-3">Login</h3>
 

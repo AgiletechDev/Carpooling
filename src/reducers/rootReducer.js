@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux'
 
 import { authReducer } from './authReducer'
-import { tripReducer } from './viajesReducer'
+import { tripReducer } from './tripReducer'
+import { uiReducer } from './uiReducer'
 
 export const rootReducer = combineReducers({
   trip: tripReducer,
-  auth: authReducer
+  auth: authReducer,
+  ui: uiReducer
 })

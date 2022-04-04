@@ -4,18 +4,18 @@ import moment from 'moment'
 
 import { ViajesItem } from '../ViajesItem'
 
-export const RealizadoList = () => {
+export const ArealizarList = () => {
   const { viajes } = useSelector((state) => state.trip)
   const now = moment()
-  const realizados = viajes.filter((item) => {
+  const arealizar = viajes.filter((item) => {
     const date = moment(item.fecha)
-    return date.isBefore(now)
+    return date.isAfter(now)
   })
 
   return (
     <div>
-      {realizados.map((item) => (
-        <ViajesItem key={item.uid} {...item} realizado />
+      {arealizar.map((item) => (
+        <ViajesItem key={item.uid} {...item} />
       ))}
     </div>
   )

@@ -99,7 +99,7 @@ export const RegisterScreen = () => {
   return (
     <div className="container text-center">
       <div className="row align-items-center justify-content-center mt-5">
-        <div className="col-lg-5">
+        <div className="col-lg-5 shadow rounded form-container">
           <form onSubmit={handleSubmit} noValidate>
             <h3>Registro</h3>
 

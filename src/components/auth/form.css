@@ -6,3 +6,7 @@ p {
   text-decoration: none;
   color: #167bff;
 }
+
+.form-container {
+  background: white;
+}

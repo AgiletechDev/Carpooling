@@ -1,5 +1,6 @@
 import Swal from 'sweetalert2'
 import { fetchConToken } from '../helpers/fetch'
+import { prepareViajes } from '../helpers/prepareViajes'
 import { types } from '../types/types'
 
 export const startGetViajes = () => {
@@ -7,7 +8,8 @@ export const startGetViajes = () => {
     try {
       const resp = await fetchConToken('viajes/misviajes')
       const body = await resp.json()
-      dispatch(loadViajes(body.viajes))
+      const viajes = prepareViajes(body.viajes)
+      dispatch(loadViajes(viajes))
     } catch (error) {
       console.log(error)
     }
@@ -26,7 +28,6 @@ export const startCrearViaje = (viaje) => {
     viaje.rol = rol
     const resp = await fetchConToken('viajes/', viaje, 'POST')
     const body = await resp.json()
-    console.log(body)
     if (body.ok) {
       dispatch(crearViaje(body.viaje))
       Swal.fire('Success', 'Viaje creado', 'success')
@@ -39,4 +40,37 @@ export const startCrearViaje = (viaje) => {
 const crearViaje = (viaje) => ({
   type: types.viajesCreate,
   payload: viaje
+})
+
+export const clearViajes = () => ({
+  type: types.viajesClear
+})
+
+export const setActiveViaje = (viaje) => ({
+  type: types.viajesSetActive,
+  payload: viaje
+})
+
+export const clearActiveViaje = () => ({
+  type: types.viajesClearActive
+})
+
+export const startDeleteViaje = () => {
+  return async (dispatch, getState) => {
+    const { activeViaje } = getState().trip
+    const { uid } = activeViaje
+    const resp = await fetchConToken(`viajes/${uid}`, {}, 'DELETE')
+    const body = await resp.json()
+    if (body.ok) {
+      dispatch(deleteViaje(uid))
+      Swal.fire('Success', 'Viaje eliminado', 'success')
+    } else {
+      Swal.fire('Error', body.msg, 'error')
+    }
+  }
+}
+
+const deleteViaje = (uid) => ({
+  type: types.viajesDelete,
+  payload: uid
 })

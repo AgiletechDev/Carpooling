@@ -2,12 +2,12 @@ import Swal from 'sweetalert2'
 
 import { fetchConToken, fetchSinToken } from '../helpers/fetch'
 import { types } from '../types/types'
+import { clearViajes } from './viajes'
 
 export const startLogin = (correo, password) => {
   return async (dispatch) => {
     const resp = await fetchSinToken('auth/login', { correo, password }, 'POST')
     const body = await resp.json()
-    console.log(body)
 
     if (body.ok) {
       localStorage.setItem('token', body.token)
@@ -108,6 +108,7 @@ const login = (user) => ({
 export const startLogout = () => {
   return (dispatch) => {
     localStorage.clear()
+    dispatch(clearViajes())
     dispatch(logout())
   }
 }
