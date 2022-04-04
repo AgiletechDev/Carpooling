@@ -1,13 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Tab, Tabs } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { startGetViajes } from '../../actions/viajes'
 import { BuscarScreen } from './home/BuscarScreen'
 import { CrearScreen } from './home/CrearScreen'
 import { RealizadoList } from './realizados/RealizadoList'
 
 export const AppScreen = () => {
+  const dispatch = useDispatch()
   const { rol } = useSelector((state) => state.auth)
   const [key, setKey] = useState('home')
+
+  useEffect(() => {
+    dispatch(startGetViajes())
+  }, [dispatch])
 
   return (
     <div className="container mt-5">

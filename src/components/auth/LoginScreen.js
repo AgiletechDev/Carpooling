@@ -104,7 +104,6 @@ export const LoginScreen = () => {
               onSuccess={handleGoogleLogin}
               onFailure={handleGoogleFail}
               cookiePolicy={'single_host_origin'}
-              isSignedIn={true}
             />
 
             <p className="text-end mt-3">

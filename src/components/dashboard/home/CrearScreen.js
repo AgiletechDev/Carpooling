@@ -8,6 +8,8 @@ import { useForm } from '../../../hooks/useForm'
 import 'react-datepicker/dist/react-datepicker.css'
 
 import 'moment/locale/es'
+import { useDispatch } from 'react-redux'
+import { startCrearViaje } from '../../../actions/viajes'
 
 moment.locale('es')
 registerLocale('es', es)
@@ -15,6 +17,7 @@ registerLocale('es', es)
 const now = moment().minutes(0).seconds(0)
 
 export const CrearScreen = () => {
+  const dispatch = useDispatch()
   const [step, setStep] = useState(1)
 
   const [desdeValid, setDesdeValid] = useState(true)
@@ -116,7 +119,7 @@ export const CrearScreen = () => {
   }
 
   const handleFinalSubmit = () => {
-    console.log({ ...formValues1, ...formValues2 })
+    dispatch(startCrearViaje({ ...formValues1, ...formValues2 }))
   }
 
   switch (step) {

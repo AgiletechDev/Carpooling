@@ -120,7 +120,12 @@ export const startUpdateUser = (uid, data) => {
   return async (dispatch) => {
     const resp = await fetchConToken(`usuarios/${uid}`, data, 'PUT')
     const body = await resp.json()
-    dispatch(updateUser(body))
+    if (body.ok) {
+      dispatch(updateUser(body.usuario))
+      Swal.fire('Success', 'Usuario actualizado', 'success')
+    } else {
+      Swal.fire('Error', body.msg, 'error')
+    }
   }
 }
 
