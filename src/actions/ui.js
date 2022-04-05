@@ -15,3 +15,11 @@ export const openEditarModal = () => ({
 export const closeEditarModal = () => ({
   type: types.uiCloseModalEditar
 })
+
+export const openSolicitudesModal = () => ({
+  type: types.uiOpenModalSolicitudes
+})
+
+export const closeSolicitudesModal = () => ({
+  type: types.uiCloseModalSolicitudes
+})

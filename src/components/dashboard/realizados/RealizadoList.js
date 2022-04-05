@@ -14,9 +14,13 @@ export const RealizadoList = () => {
 
   return (
     <div>
-      {realizados.map((item) => (
-        <ViajesItem key={item.uid} {...item} realizado />
-      ))}
+      {realizados.length !== 0 ? (
+        realizados.map((item) => (
+          <ViajesItem key={item.uid} {...item} realizado />
+        ))
+      ) : (
+        <p>Sin viajes realizados</p>
+      )}
     </div>
   )
 }

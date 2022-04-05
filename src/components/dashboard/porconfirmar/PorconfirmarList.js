@@ -1,5 +1,15 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
+import { ViajesItem } from '../ViajesItem'
 export const PorconfirmarList = () => {
-  return <div>PorconfirmarList</div>
+  const { listaEspera } = useSelector((state) => state.trip)
+
+  return (
+    <div>
+      {listaEspera.map((item) => (
+        <ViajesItem key={item.uid} {...item} />
+      ))}
+    </div>
+  )
 }

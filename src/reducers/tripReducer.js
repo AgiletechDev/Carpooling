@@ -2,7 +2,9 @@ import { types } from '../types/types'
 
 const initialState = {
   viajes: [],
-  activeViaje: null
+  activeViaje: null,
+  busqueda: [],
+  listaEspera: []
 }
 
 export const tripReducer = (state = initialState, action) => {
@@ -19,10 +21,18 @@ export const tripReducer = (state = initialState, action) => {
         viajes: [...action.payload]
       }
 
+    case types.viajesLoadLista:
+      return {
+        ...state,
+        listaEspera: [...action.payload]
+      }
+
     case types.viajesClear:
       return {
         viajes: [],
-        activeViaje: null
+        activeViaje: null,
+        busqueda: [],
+        listaEspera: []
       }
 
     case types.viajesSetActive:
@@ -42,6 +52,21 @@ export const tripReducer = (state = initialState, action) => {
         ...state,
         viajes: state.viajes.filter((viaje) => viaje.uid !== action.payload),
         activeViaje: null
+      }
+
+    case types.viajesGuardar:
+      return {
+        ...state,
+        busqueda: [...action.payload]
+      }
+
+    case types.viajesSolicitarUnirse:
+      return {
+        ...state,
+        listaEspera: [...state.listaEspera, action.payload],
+        busqueda: state.busqueda.filter(
+          (viaje) => viaje.uid !== action.payload.uid
+        )
       }
 
     default:

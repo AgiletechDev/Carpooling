@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, Modal, Tab, Tabs } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { AiOutlineClockCircle } from 'react-icons/ai'
-import { FaMapMarkerAlt, FaCar, FaDollarSign, FaRegUser } from 'react-icons/fa'
+import { FaCar, FaDollarSign, FaRegUser } from 'react-icons/fa'
 import DatePicker, { registerLocale } from 'react-datepicker'
 import es from 'date-fns/locale/es'
 import moment from 'moment'
@@ -10,19 +10,25 @@ import moment from 'moment'
 import {
   clearActiveViaje,
   startDeleteViaje,
-  startGetViajes
+  startGetViajes,
+  startSolicitarUnirse
 } from '../../actions/viajes'
 import { ArealizarList } from './arealizar/ArealizarList'
 import { BuscarScreen } from './home/BuscarScreen'
 import { CrearScreen } from './home/CrearScreen'
 import { PorconfirmarList } from './porconfirmar/PorconfirmarList'
 import { RealizadoList } from './realizados/RealizadoList'
-import { closeDetallesModal, closeEditarModal } from '../../actions/ui'
+import {
+  closeDetallesModal,
+  closeEditarModal,
+  closeSolicitudesModal
+} from '../../actions/ui'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import './app.css'
 
 import 'moment/locale/es'
+import { SolicitudItem } from './SolicitudItem'
 moment.locale('es')
 registerLocale('es', es)
 
@@ -38,7 +44,9 @@ const initState = {
 export const AppScreen = () => {
   const dispatch = useDispatch()
   const { rol } = useSelector((state) => state.auth)
-  const { showDetalles, showEditar } = useSelector((state) => state.ui)
+  const { showDetalles, showEditar, showSolicitudes } = useSelector(
+    (state) => state.ui
+  )
   const { activeViaje } = useSelector((state) => state.trip)
 
   const [desdeValid, setDesdeValid] = useState(true)
@@ -66,17 +74,50 @@ export const AppScreen = () => {
   }, [activeViaje])
 
   const closeDetalles = () => {
-    dispatch(clearActiveViaje())
     dispatch(closeDetallesModal())
+    dispatch(clearActiveViaje())
   }
 
   const closeEditar = () => {
-    dispatch(clearActiveViaje())
     dispatch(closeEditarModal())
+    dispatch(clearActiveViaje())
   }
+
+  const closeSolicitudes = () => {
+    dispatch(closeSolicitudesModal())
+  }
+
+  const validateForm = () => {
+    let valid = true
+    const selectedDate = moment(fecha)
+
+    if (desde.trim().length < 2) {
+      setDesdeValid(false)
+      valid = valid && false
+    } else setDesdeValid(true)
+
+    if (hasta.trim().length < 2) {
+      setHastaValid(false)
+      valid = valid && false
+    } else setHastaValid(true)
+
+    if (selectedDate.isBefore(now)) {
+      setFechaValid(false)
+      valid = valid && false
+    } else setFechaValid(true)
+
+    if (precio.trim().length < 1 || Number(precio.trim()) < 0) {
+      setPrecioValid(false)
+      valid = valid && false
+    } else setPrecioValid(true)
+
+    return valid
+  }
+
   const handleEditar = (e) => {
     e.preventDefault()
-    console.log(formValues)
+    const isValid = validateForm()
+    if (isValid) console.log(formValues)
   }
 
   const handleDateChange = (e) => {
@@ -99,6 +140,18 @@ export const AppScreen = () => {
     dispatch(startDeleteViaje())
     dispatch(closeDetallesModal())
   }
+
+  const handleSolicitarUnirse = () => {
+    dispatch(startSolicitarUnirse())
+    dispatch(closeDetallesModal())
+  }
+
+  // const { activeViaje } = useSelector((state) => state.trip)
+  // const now = moment()
+  // const arealizar = listaEspera.filter((item) => {
+  //   const date = moment(item.fecha)
+  //   return date.isAfter(now)
+  // })
 
   return (
     <>
@@ -170,7 +223,27 @@ export const AppScreen = () => {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="danger" onClick={handleDeleteViaje}>
+          <Button
+            variant="success"
+            style={{
+              display: `${
+                rol === 'USER_ROLE' &&
+                (!!activeViaje ? !activeViaje.joined : true)
+                  ? ''
+                  : 'none'
+              }`
+            }}
+            onClick={handleSolicitarUnirse}
+          >
+            Solicitar unirse
+          </Button>
+          <Button
+            variant="danger"
+            style={{
+              display: `${rol === 'CONDUCTOR_ROLE' ? '' : 'none'}`
+            }}
+            onClick={handleDeleteViaje}
+          >
             Eliminar viaje
           </Button>
         </Modal.Footer>
@@ -245,6 +318,26 @@ export const AppScreen = () => {
               </Button>
             </div>
           </form>
+        </Modal.Body>
+      </Modal>
+
+      <Modal show={showSolicitudes} onHide={closeSolicitudes}>
+        <Modal.Header closeButton>
+          <Modal.Title>Solicitudes</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          {!!activeViaje && rol === 'CONDUCTOR_ROLE' ? (
+            activeViaje.listaespera !== null ? (
+              activeViaje.listaespera.map((item) => (
+                <SolicitudItem key={item._id} {...item} />
+              ))
+            ) : (
+              <></>
+            )
+          ) : (
+            <></>
+          )}
         </Modal.Body>
       </Modal>
     </>

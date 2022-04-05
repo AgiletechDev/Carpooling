@@ -2,7 +2,8 @@ import { types } from '../types/types'
 
 const initialState = {
   showEditar: false,
-  showDetalles: false
+  showDetalles: false,
+  showSolicitudes: false
 }
 
 export const uiReducer = (state = initialState, action) => {
@@ -29,6 +30,18 @@ export const uiReducer = (state = initialState, action) => {
       return {
         ...state,
         showEditar: false
+      }
+
+    case types.uiOpenModalSolicitudes:
+      return {
+        ...state,
+        showSolicitudes: true
+      }
+
+    case types.uiCloseModalSolicitudes:
+      return {
+        ...state,
+        showSolicitudes: false
       }
 
     default:

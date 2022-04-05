@@ -5,7 +5,11 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { AiOutlineClockCircle } from 'react-icons/ai'
 import { FaMapMarkerAlt, FaCar, FaDollarSign, FaRegUser } from 'react-icons/fa'
-import { openDetallesModal, openEditarModal } from '../../actions/ui'
+import {
+  openDetallesModal,
+  openEditarModal,
+  openSolicitudesModal
+} from '../../actions/ui'
 import { setActiveViaje } from '../../actions/viajes'
 
 export const ViajesItem = (viaje) => {
@@ -22,6 +26,11 @@ export const ViajesItem = (viaje) => {
   const handleOpenEditar = () => {
     dispatch(setActiveViaje(viaje))
     dispatch(openEditarModal())
+  }
+
+  const handleOpenSolicitudes = () => {
+    dispatch(setActiveViaje(viaje))
+    dispatch(openSolicitudesModal())
   }
 
   return (
@@ -69,7 +78,11 @@ export const ViajesItem = (viaje) => {
             display: `${rol === 'CONDUCTOR_ROLE' && !realizado ? '' : 'none'}`
           }}
         >
-          <button type="button" className="btn btn-success">
+          <button
+            type="button"
+            className="btn btn-success"
+            onClick={handleOpenSolicitudes}
+          >
             Solicitudes
           </button>
         </div>
