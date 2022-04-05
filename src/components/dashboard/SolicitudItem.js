@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, Col, Row } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { startAceptarSolicitud } from '../../actions/viajes'
 
 export const SolicitudItem = (solicitud) => {
@@ -8,7 +8,6 @@ export const SolicitudItem = (solicitud) => {
 
   const handleConfirmar = () => {
     dispatch(startAceptarSolicitud(solicitud._id))
-    console.log('click')
   }
 
   return (
