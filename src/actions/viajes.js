@@ -98,9 +98,14 @@ export const startAceptarSolicitud = (id) => {
       'PUT'
     )
     const body = await resp.json()
-    console.log(body)
+    dispatch(aceptarSolicitud(body.disjoined))
   }
 }
+
+const aceptarSolicitud = (solicitud) => ({
+  type: types.viajesConfirmar,
+  payload: solicitud
+})
 
 export const startCrearViaje = (viaje) => {
   return async (dispatch, getState) => {

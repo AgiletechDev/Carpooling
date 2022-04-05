@@ -69,6 +69,18 @@ export const tripReducer = (state = initialState, action) => {
         )
       }
 
+    case types.viajesConfirmar:
+      return {
+        ...state,
+        viajes: state.viajes.map((viaje) => {
+          if (viaje.uid === action.payload.uid) {
+            viaje.listaespera = action.payload.listaespera
+            viaje.pasajeros = action.payload.pasajeros
+          }
+          return viaje
+        })
+      }
+
     default:
       return state
   }
