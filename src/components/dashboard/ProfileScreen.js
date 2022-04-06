@@ -2,14 +2,13 @@ import React, { useState } from 'react'
 import DatePicker, { registerLocale } from 'react-datepicker'
 import es from 'date-fns/locale/es'
 import moment from 'moment'
+import 'moment/locale/es'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { useForm } from '../../hooks/useForm'
+import { startUpdateUser } from '../../actions/auth'
 
 import 'react-datepicker/dist/react-datepicker.css'
-
-import 'moment/locale/es'
-import { startUpdateUser } from '../../actions/auth'
 
 moment.locale('es')
 registerLocale('es', es)

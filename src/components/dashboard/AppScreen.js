@@ -6,6 +6,7 @@ import { FaCar, FaDollarSign, FaRegUser } from 'react-icons/fa'
 import DatePicker, { registerLocale } from 'react-datepicker'
 import es from 'date-fns/locale/es'
 import moment from 'moment'
+import 'moment/locale/es'
 
 import {
   clearActiveViaje,
@@ -23,12 +24,11 @@ import {
   closeEditarModal,
   closeSolicitudesModal
 } from '../../actions/ui'
+import { SolicitudItem } from './SolicitudItem'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import './app.css'
 
-import 'moment/locale/es'
-import { SolicitudItem } from './SolicitudItem'
 moment.locale('es')
 registerLocale('es', es)
 

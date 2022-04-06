@@ -1,15 +1,15 @@
 import React from 'react'
 import DatePicker, { registerLocale } from 'react-datepicker'
+import { useDispatch, useSelector } from 'react-redux'
 import es from 'date-fns/locale/es'
 import moment from 'moment'
-
-import 'react-datepicker/dist/react-datepicker.css'
-
 import 'moment/locale/es'
+
 import { useForm } from '../../../hooks/useForm'
-import { useDispatch, useSelector } from 'react-redux'
 import { buscarViajes } from '../../../actions/viajes'
 import { ViajesItem } from '../ViajesItem'
+
+import 'react-datepicker/dist/react-datepicker.css'
 
 moment.locale('es')
 registerLocale('es', es)
@@ -38,7 +38,6 @@ export const BuscarScreen = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     dispatch(buscarViajes(formValues))
-    // console.log(formValues)
   }
 
   return (

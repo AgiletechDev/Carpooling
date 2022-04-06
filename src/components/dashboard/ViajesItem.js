@@ -2,7 +2,6 @@ import moment from 'moment'
 import React from 'react'
 import { Card, Col, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-
 import { AiOutlineClockCircle } from 'react-icons/ai'
 import { FaMapMarkerAlt, FaCar, FaDollarSign, FaRegUser } from 'react-icons/fa'
 import {
@@ -10,6 +9,7 @@ import {
   openEditarModal,
   openSolicitudesModal
 } from '../../actions/ui'
+
 import { setActiveViaje } from '../../actions/viajes'
 
 export const ViajesItem = (viaje) => {

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card, Col, Row } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
+
 import { startAceptarSolicitud } from '../../actions/viajes'
 
 export const SolicitudItem = (solicitud) => {

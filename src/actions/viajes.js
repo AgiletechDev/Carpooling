@@ -1,8 +1,9 @@
 import Swal from 'sweetalert2'
+import moment from 'moment'
+
 import { fetchConToken } from '../helpers/fetch'
 import { prepareViajes } from '../helpers/prepareViajes'
 import { types } from '../types/types'
-import moment from 'moment'
 
 const now = moment()
 
