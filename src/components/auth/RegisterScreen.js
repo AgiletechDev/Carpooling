@@ -104,7 +104,7 @@ export const RegisterScreen = () => {
             <h3>Registro</h3>
 
             <div className="form-group text-start mb-2">
-              <label className="form-label">Name</label>
+              <label className="form-label">Nombre</label>
               <input
                 type="text"
                 className={`form-control ${!nameValid && 'is-invalid'}`}
@@ -143,7 +143,7 @@ export const RegisterScreen = () => {
             </div>
 
             <div className="form-group text-start mb-2">
-              <label className="form-label">Date of birth</label>
+              <label className="form-label">Fecha de Nacimiento</label>
               <DatePicker
                 className={`form-control ${
                   !fechaNacimientoValid && 'is-invalid'
@@ -203,7 +203,7 @@ export const RegisterScreen = () => {
             </div>
 
             <p className="text-end">
-              Already registered{' '}
+              Ya registrado{' '}
               <Link className="a-link" to="/auth/login">
                 login?
               </Link>

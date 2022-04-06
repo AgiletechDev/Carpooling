@@ -11,7 +11,7 @@ export const Appbar = () => {
   const dispatch = useDispatch()
   const { uid, name } = useSelector((state) => state.auth)
 
-  const nombres = name.split(' ')
+  const nombres = name !== undefined ? name.split(' ') : ['User']
 
   const handleLogout = () => {
     dispatch(startLogout())
