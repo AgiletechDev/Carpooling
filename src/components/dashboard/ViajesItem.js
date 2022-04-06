@@ -34,63 +34,68 @@ export const ViajesItem = (viaje) => {
   }
 
   return (
-    <Card style={{ width: '22rem' }} className="shadow-sm m-3 bg-body rounded">
-      <Card.Body>
-        <Row>
-          <Col xs={8} className="border-end">
-            <p>
-              <AiOutlineClockCircle /> {date.format('D MMMM YYYY, h:mm a')}
-            </p>
-            <p>
-              <FaMapMarkerAlt /> {desde}
-            </p>
-            <p>
-              <FaMapMarkerAlt /> {hasta}
-            </p>
-            <p>
-              <FaCar /> {vehiculo}
-            </p>
-          </Col>
-          <Col className="border-start">
-            <p>
-              <FaDollarSign /> {precio}
-            </p>
-            <p>Por pasajero</p>
-            <p>
-              <FaRegUser /> {asientos}
-            </p>
-          </Col>
-        </Row>
-      </Card.Body>
-      <Card.Footer className="d-flex justify-content-evenly">
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={handleOpenDetalles}
-        >
-          Detalles
-        </button>
+    <Col>
+      <Card
+        style={{ width: '24rem' }}
+        className="shadow-sm m-3 bg-body rounded"
+      >
+        <Card.Body>
+          <Row>
+            <Col xs={8} className="border-end">
+              <p>
+                <AiOutlineClockCircle /> {date.format('D MMMM YYYY, h:mm a')}
+              </p>
+              <p>
+                <FaMapMarkerAlt /> {desde}
+              </p>
+              <p>
+                <FaMapMarkerAlt /> {hasta}
+              </p>
+              <p>
+                <FaCar /> {vehiculo}
+              </p>
+            </Col>
+            <Col className="border-start">
+              <p>
+                <FaDollarSign /> {precio}
+              </p>
+              <p>Por pasajero</p>
+              <p>
+                <FaRegUser /> {asientos}
+              </p>
+            </Col>
+          </Row>
+        </Card.Body>
+        <Card.Footer className="d-flex justify-content-evenly">
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={handleOpenDetalles}
+          >
+            Detalles
+          </button>
 
-        {rol === 'CONDUCTOR_ROLE' && !realizado ? (
-          <>
-            <button
-              type="button"
-              className="btn btn-success"
-              onClick={handleOpenSolicitudes}
-            >
-              Solicitudes
-            </button>
+          {rol === 'CONDUCTOR_ROLE' && !realizado ? (
+            <>
+              <button
+                type="button"
+                className="btn btn-success"
+                onClick={handleOpenSolicitudes}
+              >
+                Solicitudes
+              </button>
 
-            <button
-              type="button"
-              className="btn btn-warning"
-              onClick={handleOpenEditar}
-            >
-              Editar
-            </button>
-          </>
-        ) : null}
-      </Card.Footer>
-    </Card>
+              <button
+                type="button"
+                className="btn btn-warning"
+                onClick={handleOpenEditar}
+              >
+                Editar
+              </button>
+            </>
+          ) : null}
+        </Card.Footer>
+      </Card>
+    </Col>
   )
 }

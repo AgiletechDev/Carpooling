@@ -45,7 +45,8 @@ export const buscarViajes = (filters) => {
         if (
           !viaje.listaespera.includes(uid) &&
           !viaje.pasajeros.includes(uid) &&
-          moment(viaje.fecha).isAfter(now)
+          moment(viaje.fecha).isAfter(now) &&
+          viaje.asientos !== 0
         )
           return desde === ''
             ? true

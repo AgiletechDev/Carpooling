@@ -13,7 +13,7 @@ export const RealizadoList = () => {
   })
 
   return (
-    <div>
+    <div className="row row-cols-lg-3 g-3">
       {realizados.length !== 0 ? (
         realizados.map((item) => (
           <ViajesItem key={item.uid} {...item} realizado />

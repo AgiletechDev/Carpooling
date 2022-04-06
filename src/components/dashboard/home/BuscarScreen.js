@@ -42,7 +42,7 @@ export const BuscarScreen = () => {
 
   return (
     <>
-      <div className="container mt-3 text-center mb-3">
+      <div className="container mt-3 text-center">
         <div className="row align-items-center justify-content-center mt-5">
           <div className="col-lg-5">
             <form onSubmit={handleSubmit}>
@@ -102,11 +102,13 @@ export const BuscarScreen = () => {
         </div>
       </div>
 
-      <div>
-        {busqueda.map((item) => (
-          <ViajesItem key={item.uid} {...item} />
-        ))}
-      </div>
+      {!!busqueda ? (
+        <div className="row row-cols-lg-2 g-3 mt-2">
+          {busqueda.map((item) => (
+            <ViajesItem key={item.uid} {...item} />
+          ))}
+        </div>
+      ) : null}
     </>
   )
 }

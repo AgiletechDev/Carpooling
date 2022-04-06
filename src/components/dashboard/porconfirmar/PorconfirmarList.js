@@ -6,7 +6,7 @@ export const PorconfirmarList = () => {
   const { listaEspera } = useSelector((state) => state.trip)
 
   return (
-    <div>
+    <div className="row row-cols-lg-3 g-3">
       {listaEspera.map((item) => (
         <ViajesItem key={item.uid} {...item} />
       ))}
