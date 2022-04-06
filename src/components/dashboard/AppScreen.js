@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Modal, Tab, Tabs } from 'react-bootstrap'
+import { Tab, Tabs } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { startGetViajes } from '../../actions/viajes'
@@ -8,18 +8,15 @@ import { BuscarScreen } from './home/BuscarScreen'
 import { CrearScreen } from './home/CrearScreen'
 import { PorconfirmarList } from './porconfirmar/PorconfirmarList'
 import { RealizadoList } from './realizados/RealizadoList'
-import { closeSolicitudesModal } from '../../actions/ui'
-import { SolicitudItem } from './SolicitudItem'
 import { DetallesModal } from './modals/DetallesModal'
 import { EditarModal } from './modals/EditarModal'
+import { SolicitudesModal } from './modals/SolicitudesModal'
 
 import './app.css'
 
 export const AppScreen = () => {
   const dispatch = useDispatch()
   const { rol } = useSelector((state) => state.auth)
-  const { showSolicitudes } = useSelector((state) => state.ui)
-  const { activeViaje } = useSelector((state) => state.trip)
 
   const [key, setKey] = useState('home')
 
@@ -29,10 +26,6 @@ export const AppScreen = () => {
   useEffect(() => {
     dispatch(startGetViajes())
   }, [dispatch])
-
-  const closeSolicitudes = () => {
-    dispatch(closeSolicitudesModal())
-  }
 
   return (
     <>
@@ -73,25 +66,7 @@ export const AppScreen = () => {
 
       <EditarModal />
 
-      <Modal show={showSolicitudes} onHide={closeSolicitudes}>
-        <Modal.Header closeButton>
-          <Modal.Title>Solicitudes</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
-          {!!activeViaje && rol === 'CONDUCTOR_ROLE' ? (
-            activeViaje.listaespera !== null ? (
-              activeViaje.listaespera.map((item) => (
-                <SolicitudItem key={item._id} {...item} />
-              ))
-            ) : (
-              <></>
-            )
-          ) : (
-            <></>
-          )}
-        </Modal.Body>
-      </Modal>
+      <SolicitudesModal />
     </>
   )
 }
