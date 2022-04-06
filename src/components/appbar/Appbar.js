@@ -55,7 +55,7 @@ export const Appbar = () => {
               display: `${!!uid ? 'none' : ''}`
             }}
           >
-            Register
+            Registrarse
           </Link>
           <Link
             to="/"
@@ -66,7 +66,7 @@ export const Appbar = () => {
           >
             <BsBellFill />
             <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-              +99
+              +1
             </span>
           </Link>
         </div>
@@ -78,7 +78,7 @@ export const Appbar = () => {
             }}
             onClick={handleLogout}
           >
-            Logout
+            Salir
           </button>
         </div>
       </div>

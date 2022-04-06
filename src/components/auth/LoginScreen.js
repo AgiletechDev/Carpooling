@@ -56,7 +56,7 @@ export const LoginScreen = () => {
       <div className="row align-items-center justify-content-center mt-5">
         <div className="col-lg-5 shadow rounded form-container">
           <form onSubmit={handleSubmit}>
-            <h3 className="mb-3">Login</h3>
+            <h3 className="mb-3">Inicio de Sesion</h3>
 
             <div className="form-group text-start mb-2">
               <label className="form-label">Email</label>
@@ -72,7 +72,7 @@ export const LoginScreen = () => {
             </div>
 
             <div className="form-group text-start mb-4">
-              <label className="form-label">Password</label>
+              <label className="form-label">Contraseña</label>
               <input
                 type="password"
                 className={`form-control ${!passwordValid && 'is-invalid'}`}
@@ -92,7 +92,7 @@ export const LoginScreen = () => {
 
           <div className="mt-5">
             <hr />
-            <h5 className="mb-3">or connect with</h5>
+            <h5 className="mb-3">Ingresa con</h5>
             <GoogleLogin
               clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
               render={(renderProps) => (
@@ -107,9 +107,9 @@ export const LoginScreen = () => {
             />
 
             <p className="text-end mt-3">
-              Don't have an account{' '}
+              Aun no tienes una cuenta?{' '}
               <Link className="a-link" to="/auth/register">
-                register?
+                Registrarse
               </Link>
             </p>
           </div>

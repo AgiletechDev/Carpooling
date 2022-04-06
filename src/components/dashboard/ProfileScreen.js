@@ -66,7 +66,7 @@ export const ProfileScreen = () => {
             <h3>Editar perfil</h3>
 
             <div className="form-group text-start mb-2">
-              <label className="form-label">Date of birth</label>
+              <label className="form-label">Fecha de Nacimiento</label>
               <DatePicker
                 className={`form-control ${
                   !fechaNacimientoValid && 'is-invalid'
@@ -83,7 +83,7 @@ export const ProfileScreen = () => {
             </div>
 
             <div className="form-group text-start mb-4">
-              <label className="form-label">Type of user</label>
+              <label className="form-label">Tipo de Usuario</label>
               <select
                 className="form-select"
                 name="rol"
