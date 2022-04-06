@@ -4,8 +4,6 @@ import DatePicker, { registerLocale } from 'react-datepicker'
 import es from 'date-fns/locale/es'
 import 'moment/locale/es'
 
-import 'react-datepicker/dist/react-datepicker.css'
-
 moment.locale('es')
 registerLocale('es', es)
 
@@ -43,6 +41,8 @@ export const Form1 = ({ setStep, formValues1, handleInputChange1 }) => {
   const handleSubmit1 = (e) => {
     e.preventDefault()
     const isValid = validateForm1()
+
+    console.log(fecha)
 
     if (isValid) {
       setStep(2)
