@@ -30,9 +30,7 @@ export const SolicitudesModal = () => {
           ) : (
             <p>Sin solicitudes</p>
           )
-        ) : (
-          <></>
-        )}
+        ) : null}
       </Modal.Body>
     </Modal>
   )

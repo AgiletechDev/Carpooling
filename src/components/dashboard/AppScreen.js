@@ -20,9 +20,6 @@ export const AppScreen = () => {
 
   const [key, setKey] = useState('home')
 
-  const disabled =
-    rol === 'USER_ROLE' ? { disabled: false } : { disabled: true }
-
   useEffect(() => {
     dispatch(startGetViajes())
   }, [dispatch])
@@ -35,20 +32,7 @@ export const AppScreen = () => {
             eventKey="home"
             title={rol === 'CONDUCTOR_ROLE' ? 'Crear' : 'Buscar'}
           >
-            <div
-              style={{
-                display: `${rol === 'CONDUCTOR_ROLE' ? '' : 'none'}`
-              }}
-            >
-              <CrearScreen />
-            </div>
-            <div
-              style={{
-                display: `${rol === 'USER_ROLE' ? '' : 'none'}`
-              }}
-            >
-              <BuscarScreen />
-            </div>
+            {rol === 'CONDUCTOR_ROLE' ? <CrearScreen /> : <BuscarScreen />}
           </Tab>
           <Tab eventKey="realizados" title="Realizados">
             <RealizadoList />
@@ -56,9 +40,11 @@ export const AppScreen = () => {
           <Tab eventKey="arealizar" title="Arealizar">
             <ArealizarList />
           </Tab>
-          <Tab eventKey="por confirmar" title="Por confirmar" {...disabled}>
-            <PorconfirmarList />
-          </Tab>
+          {rol === 'USER_ROLE' ? (
+            <Tab eventKey="por confirmar" title="Por confirmar">
+              <PorconfirmarList />
+            </Tab>
+          ) : null}
         </Tabs>
       </div>
 

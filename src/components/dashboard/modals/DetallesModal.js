@@ -72,29 +72,17 @@ export const DetallesModal = () => {
       </Modal.Body>
 
       <Modal.Footer>
-        <Button
-          variant="success"
-          style={{
-            display: `${
-              rol === 'USER_ROLE' &&
-              (!!activeViaje ? !activeViaje.joined : true)
-                ? ''
-                : 'none'
-            }`
-          }}
-          onClick={handleSolicitarUnirse}
-        >
-          Solicitar unirse
-        </Button>
-        <Button
-          variant="danger"
-          style={{
-            display: `${rol === 'CONDUCTOR_ROLE' ? '' : 'none'}`
-          }}
-          onClick={handleDeleteViaje}
-        >
-          Eliminar viaje
-        </Button>
+        {rol === 'USER_ROLE' && (!!activeViaje ? !activeViaje.joined : true) ? (
+          <Button variant="success" onClick={handleSolicitarUnirse}>
+            Solicitar unirse
+          </Button>
+        ) : null}
+
+        {rol === 'CONDUCTOR_ROLE' ? (
+          <Button variant="danger" onClick={handleDeleteViaje}>
+            Eliminar viaje
+          </Button>
+        ) : null}
       </Modal.Footer>
     </Modal>
   )

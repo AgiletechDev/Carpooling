@@ -63,43 +63,33 @@ export const ViajesItem = (viaje) => {
         </Row>
       </Card.Body>
       <Card.Footer className="d-flex justify-content-evenly">
-        <div>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={handleOpenDetalles}
-          >
-            Detalles
-          </button>
-        </div>
-
-        <div
-          style={{
-            display: `${rol === 'CONDUCTOR_ROLE' && !realizado ? '' : 'none'}`
-          }}
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={handleOpenDetalles}
         >
-          <button
-            type="button"
-            className="btn btn-success"
-            onClick={handleOpenSolicitudes}
-          >
-            Solicitudes
-          </button>
-        </div>
+          Detalles
+        </button>
 
-        <div
-          style={{
-            display: `${rol === 'CONDUCTOR_ROLE' && !realizado ? '' : 'none'}`
-          }}
-        >
-          <button
-            type="button"
-            className="btn btn-warning"
-            onClick={handleOpenEditar}
-          >
-            Editar
-          </button>
-        </div>
+        {rol === 'CONDUCTOR_ROLE' && !realizado ? (
+          <>
+            <button
+              type="button"
+              className="btn btn-success"
+              onClick={handleOpenSolicitudes}
+            >
+              Solicitudes
+            </button>
+
+            <button
+              type="button"
+              className="btn btn-warning"
+              onClick={handleOpenEditar}
+            >
+              Editar
+            </button>
+          </>
+        ) : null}
       </Card.Footer>
     </Card>
   )

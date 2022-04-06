@@ -27,60 +27,41 @@ export const Appbar = () => {
           </Link>
         </div>
         <div className="col-auto">
-          <Link
-            to="/auth/login"
-            className="text-light link-home"
-            style={{
-              display: `${!!uid ? 'none' : ''}`
-            }}
-          >
-            Login
-          </Link>
-          <Link
-            to="/profile"
-            className="text-light link-home"
-            style={{
-              display: `${!!uid ? '' : 'none'}`
-            }}
-          >
-            <BsPersonCircle />
-            <span> {nombres[0]}</span>
-          </Link>
+          {!!uid ? (
+            <Link to="/profile" className="text-light link-home">
+              <BsPersonCircle />
+              <span> {nombres[0]}</span>
+            </Link>
+          ) : (
+            <Link to="/auth/login" className="text-light link-home">
+              Login
+            </Link>
+          )}
         </div>
         <div className="col-auto position-relative">
-          <Link
-            to="/auth/register"
-            className="text-light link-home"
-            style={{
-              display: `${!!uid ? 'none' : ''}`
-            }}
-          >
-            Registrarse
-          </Link>
-          <Link
-            to="/"
-            className="text-light link-home"
-            style={{
-              display: `${!!uid ? '' : 'none'}`
-            }}
-          >
-            <BsBellFill />
-            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-              +1
-            </span>
-          </Link>
+          {!!uid ? (
+            <Link to="/" className="text-light link-home">
+              <BsBellFill />
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                +1
+              </span>
+            </Link>
+          ) : (
+            <Link to="/auth/register" className="text-light link-home">
+              Registrarse
+            </Link>
+          )}
         </div>
-        <div className="col-auto">
-          <button
-            className="btn text-light link-home ms-2 p-0"
-            style={{
-              display: `${!!uid ? '' : 'none'}`
-            }}
-            onClick={handleLogout}
-          >
-            Salir
-          </button>
-        </div>
+        {!!uid ? (
+          <div className="col-auto">
+            <button
+              className="btn text-light link-home ms-2 p-0"
+              onClick={handleLogout}
+            >
+              Salir
+            </button>
+          </div>
+        ) : null}
       </div>
     </div>
   )
