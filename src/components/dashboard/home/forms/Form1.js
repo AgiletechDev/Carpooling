@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import moment from 'moment'
 import DatePicker, { registerLocale } from 'react-datepicker'
+// import PlacesAutocomplete, {
+//   geocodeByAddress,
+//   getLatLng
+// } from 'react-places-autocomplete'
 import es from 'date-fns/locale/es'
 import 'moment/locale/es'
 
@@ -58,6 +62,19 @@ export const Form1 = ({ setStep, formValues1, handleInputChange1 }) => {
     })
   }
 
+  // const handleDesdePlaceChange = (e) => {
+  //   handleInputChange1({
+  //     target: {
+  //       name: 'desde',
+  //       value: e
+  //     }
+  //   })
+  // }
+
+  // const handleDesdeSelect = (value) => {
+  //   console.log(value)
+  // }
+
   return (
     <form onSubmit={handleSubmit1}>
       <h3 className="mb-3">Encuentro</h3>
@@ -73,6 +90,49 @@ export const Form1 = ({ setStep, formValues1, handleInputChange1 }) => {
           onChange={handleInputChange1}
           autoComplete="off"
         />
+        {/* <PlacesAutocomplete
+          value={desde}
+          onChange={handleDesdePlaceChange}
+          onSelect={handleDesdeSelect}
+        >
+          {({
+            getInputProps,
+            suggestions,
+            getSuggestionItemProps,
+            loading
+          }) => (
+            <div>
+              <input
+                {...getInputProps({
+                  placeholder: 'Search Places ...',
+                  className: 'location-search-input form-control'
+                })}
+              />
+              <div className="autocomplete-dropdown-container">
+                {loading && <div>Loading...</div>}
+                {suggestions.map((suggestion) => {
+                  const className = suggestion.active
+                    ? 'suggestion-item--active'
+                    : 'suggestion-item'
+                  // inline style for demonstration purpose
+                  const style = suggestion.active
+                    ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                    : { backgroundColor: '#ffffff', cursor: 'pointer' }
+                  return (
+                    <div
+                      {...getSuggestionItemProps(suggestion, {
+                        className,
+                        style
+                      })}
+                    >
+                      <span>{suggestion.description}</span>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+        </PlacesAutocomplete> */}
       </div>
 
       <div className="form-group text-start mb-2">
