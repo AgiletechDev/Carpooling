@@ -103,7 +103,7 @@ export const BuscarScreen = () => {
       </div>
 
       {!!busqueda ? (
-        <div className="row row-cols-lg-2 g-3 mt-2">
+        <div className="row row-cols-lg-3 g-3 mt-2">
           {busqueda.map((item) => (
             <ViajesItem key={item.uid} {...item} />
           ))}

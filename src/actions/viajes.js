@@ -2,7 +2,7 @@ import Swal from 'sweetalert2'
 import moment from 'moment'
 
 import { fetchConToken } from '../helpers/fetch'
-import { prepareViajes } from '../helpers/prepareViajes'
+import { prepareViaje, prepareViajes } from '../helpers/prepareViajes'
 import { types } from '../types/types'
 
 const now = moment()
@@ -101,7 +101,13 @@ export const startAceptarSolicitud = (id) => {
       'PUT'
     )
     const body = await resp.json()
-    dispatch(aceptarSolicitud(body.disjoined))
+    const viaje = prepareViaje(body.disjoined)
+    if (body.ok) {
+      dispatch(aceptarSolicitud(viaje))
+      Swal.fire('Success', 'Solicitud aceptada', 'success')
+    } else {
+      Swal.fire('Error', body.msg, 'error')
+    }
   }
 }
 

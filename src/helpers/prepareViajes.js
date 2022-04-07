@@ -16,3 +16,11 @@ export const prepareViajes = (viajes = [], uid) => {
       }
   })
 }
+
+export const prepareViaje = (viaje = {}, uid) => {
+  return {
+    ...viaje,
+    fecha: moment(viaje.fecha).toDate(),
+    joined: false
+  }
+}

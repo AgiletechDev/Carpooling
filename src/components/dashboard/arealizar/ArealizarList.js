@@ -13,7 +13,7 @@ export const ArealizarList = () => {
   })
 
   return (
-    <div className="row row-cols-lg-3 g-3">
+    <div className="row row-cols-lg-3 row-cols-sm-2 g-3">
       {arealizar.length !== 0 ? (
         arealizar.map((item) => <ViajesItem key={item.uid} {...item} />)
       ) : (
