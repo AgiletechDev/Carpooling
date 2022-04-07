@@ -1,9 +1,9 @@
 .home-container {
-  height: 100vh;
+  height: 100%;
 }
 
 .home-form {
-  height: 55%;
+  height: 50vh;
   background-image: url('https://di-uploads-development.s3.amazonaws.com/keffermazda/uploads/2015/06/teen-driver-1024x469.jpg');
   background-repeat: no-repeat;
   background-size: cover;
@@ -15,7 +15,7 @@
 }
 
 .home-footer {
-  height: 38%;
+  height: 44vh;
 }
 
 .car-img {

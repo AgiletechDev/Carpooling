@@ -9,6 +9,7 @@ import { useForm } from '../../hooks/useForm'
 import { startUpdateUser } from '../../actions/auth'
 
 import 'react-datepicker/dist/react-datepicker.css'
+import './app.css'
 
 moment.locale('es')
 registerLocale('es', es)
@@ -61,7 +62,7 @@ export const ProfileScreen = () => {
   return (
     <div className="container text-center">
       <div className="row align-items-center justify-content-center mt-5">
-        <div className="col-lg-5">
+        <div className="col-lg-5 container-profile rounded shadow py-3">
           <form onSubmit={handleSubmit} noValidate>
             <h3>Editar perfil</h3>
 
