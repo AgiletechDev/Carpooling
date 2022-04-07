@@ -7,9 +7,11 @@ export const PorconfirmarList = () => {
 
   return (
     <div className="row row-cols-lg-3 g-3">
-      {listaEspera.map((item) => (
-        <ViajesItem key={item.uid} {...item} />
-      ))}
+      {listaEspera.length !== 0 ? (
+        listaEspera.map((item) => <ViajesItem key={item.uid} {...item} />)
+      ) : (
+        <p>Sin viajes por confirmar</p>
+      )}
     </div>
   )
 }
