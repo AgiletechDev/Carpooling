@@ -11,6 +11,10 @@ export const SolicitudItem = (solicitud) => {
     dispatch(startAceptarSolicitud(solicitud._id))
   }
 
+  const handleRechazar = () => {
+    //TODO: dispatch de rechazar
+  }
+
   return (
     <Card style={{ width: '22rem' }} className="shadow-sm m-3 bg-body rounded">
       <Card.Body>
@@ -26,6 +30,14 @@ export const SolicitudItem = (solicitud) => {
             onClick={handleConfirmar}
           >
             Confirmar
+          </button>
+
+          <button
+            type="button"
+            className="btn btn-danger"
+            onClick={handleRechazar}
+          >
+            Rechazar
           </button>
         </div>
       </Card.Footer>

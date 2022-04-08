@@ -4,17 +4,23 @@ import { Link } from 'react-router-dom'
 import { BsHouseDoorFill, BsPersonCircle, BsBellFill } from 'react-icons/bs'
 
 import { startLogout } from '../../actions/auth'
+import { openNotifications } from '../../actions/ui'
 
 import './appbar.css'
 
 export const Appbar = () => {
   const dispatch = useDispatch()
   const { uid, name } = useSelector((state) => state.auth)
+  const { notifications } = useSelector((state) => state.notify)
 
   const nombres = name !== undefined ? name.split(' ') : ['User']
 
   const handleLogout = () => {
     dispatch(startLogout())
+  }
+
+  const handleShowNotifications = () => {
+    dispatch(openNotifications())
   }
 
   return (
@@ -38,14 +44,21 @@ export const Appbar = () => {
             </Link>
           )}
         </div>
-        <div className="col-auto position-relative">
+        <div className="col-auto">
           {!!uid ? (
-            <Link to="/" className="text-light link-home">
+            <button
+              className="btn text-light link-home ms-2 p-0 position-relative"
+              onClick={handleShowNotifications}
+            >
               <BsBellFill />
-              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                +1
+              <span
+                className={`position-absolute top-0 end-0 badge rounded rounded-circle bg-danger p-1 ${
+                  notifications.length === 0 ? 'visually-hidden' : ''
+                }`}
+              >
+                <span className="visually-hidden">+1</span>
               </span>
-            </Link>
+            </button>
           ) : (
             <Link to="/auth/register" className="text-light link-home">
               Registrarse

@@ -3,7 +3,8 @@ import { types } from '../types/types'
 const initialState = {
   showEditar: false,
   showDetalles: false,
-  showSolicitudes: false
+  showSolicitudes: false,
+  showNotifications: false
 }
 
 export const uiReducer = (state = initialState, action) => {
@@ -42,6 +43,18 @@ export const uiReducer = (state = initialState, action) => {
       return {
         ...state,
         showSolicitudes: false
+      }
+
+    case types.uiOpenNotifications:
+      return {
+        ...state,
+        showNotifications: true
+      }
+
+    case types.uiCloseNotifcations:
+      return {
+        ...state,
+        showNotifications: false
       }
 
     default:

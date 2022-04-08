@@ -15,7 +15,8 @@ import { setActiveViaje } from '../../actions/viajes'
 export const ViajesItem = (viaje) => {
   const dispatch = useDispatch()
   const { rol } = useSelector((state) => state.auth)
-  const { asientos, desde, fecha, hasta, precio, vehiculo, realizado } = viaje
+  const { asientos, desde, fecha, hasta, precio, vehiculo, realizado, inlist } =
+    viaje
   const date = moment(fecha)
 
   const handleOpenDetalles = () => {
@@ -74,6 +75,15 @@ export const ViajesItem = (viaje) => {
           >
             Detalles
           </button>
+          {rol === 'USER_ROLE' && inlist ? (
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={handleOpenDetalles}
+            >
+              Cancelar solicitud
+            </button>
+          ) : null}
 
           {rol === 'CONDUCTOR_ROLE' && !realizado ? (
             <>

@@ -13,6 +13,8 @@ import { EditarModal } from './modals/EditarModal'
 import { SolicitudesModal } from './modals/SolicitudesModal'
 
 import './app.css'
+import { NotificationScreen } from './NotificationScreen'
+import { startLoadingNotifications } from '../../actions/notify'
 
 export const AppScreen = () => {
   const dispatch = useDispatch()
@@ -22,6 +24,7 @@ export const AppScreen = () => {
 
   useEffect(() => {
     dispatch(startGetViajes())
+    dispatch(startLoadingNotifications())
   }, [dispatch])
 
   return (
@@ -49,10 +52,9 @@ export const AppScreen = () => {
       </div>
 
       <DetallesModal />
-
       <EditarModal />
-
       <SolicitudesModal />
+      <NotificationScreen />
     </>
   )
 }

@@ -23,3 +23,11 @@ export const openSolicitudesModal = () => ({
 export const closeSolicitudesModal = () => ({
   type: types.uiCloseModalSolicitudes
 })
+
+export const openNotifications = () => ({
+  type: types.uiOpenNotifications
+})
+
+export const closeNotifications = () => ({
+  type: types.uiCloseNotifcations
+})

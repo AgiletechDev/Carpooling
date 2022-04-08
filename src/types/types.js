@@ -20,5 +20,9 @@ export const types = {
   uiOpenModalDetalles: '[Ui] Open Detalles Modal',
   uiCloseModalDetalles: '[Ui] Close Detalles Modal',
   uiOpenModalSolicitudes: '[Ui] Open Solicituds Modal',
-  uiCloseModalSolicitudes: '[Ui] Close Solicitudes Modal'
+  uiCloseModalSolicitudes: '[Ui] Close Solicitudes Modal',
+  uiOpenNotifications: '[Ui] Open Notifications',
+  uiCloseNotifcations: '[Ui] Close Notifications',
+
+  notifyLoad: '[Notify] Loading notifications'
 }

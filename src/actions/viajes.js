@@ -76,7 +76,8 @@ export const startSolicitarUnirse = () => {
     const { uid } = activeViaje
     const resp = await fetchConToken(`viajes/joinviaje/${uid}`, {}, 'PUT')
     const body = await resp.json()
-    body.joined.joined = true
+    body.joined.joined = false
+    body.joined.inlist = true
     if (body.ok) {
       dispatch(solicitarUnirse(body.joined))
       Swal.fire('Success', 'Solicitud enviada', 'success')
