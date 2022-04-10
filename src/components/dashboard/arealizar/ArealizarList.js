@@ -17,7 +17,7 @@ export const ArealizarList = () => {
       {arealizar.length !== 0 ? (
         arealizar.map((item) => <ViajesItem key={item.uid} {...item} />)
       ) : (
-        <p>Sin viajes por realizar</p>
+        <p className="text-center">Sin viajes por realizar</p>
       )}
     </div>
   )

@@ -17,8 +17,6 @@ import 'moment/locale/es'
 moment.locale('es')
 registerLocale('es', es)
 
-const now = moment().minutes(0).seconds(0)
-
 export const RegisterScreen = () => {
   const dispatch = useDispatch()
   const [nameValid, setNameValid] = useState(true)
@@ -30,7 +28,7 @@ export const RegisterScreen = () => {
     nombre: '',
     correo: '',
     nickname: '',
-    fechaNacimiento: now.toDate(),
+    fechaNacimiento: '',
     password: '',
     password2: '',
     rol: 'USER_ROLE'
@@ -74,7 +72,10 @@ export const RegisterScreen = () => {
       valid = valid && false
     } else setNicknameValid(true)
 
-    if (Number(now.format('YYYY')) - Number(selectedDate.format('YYYY')) < 18) {
+    if (
+      Number(moment().format('YYYY')) - Number(selectedDate.format('YYYY')) <
+      18
+    ) {
       setFechaNacimientoValid(false)
       valid = valid && false
     } else setFechaNacimientoValid(true)
@@ -155,6 +156,7 @@ export const RegisterScreen = () => {
                 showYearDropdown
                 dropdownMode="select"
                 selected={fechaNacimiento}
+                placeholderText="Fecha de Nacimiento"
                 onChange={handleDateChange}
               />
             </div>

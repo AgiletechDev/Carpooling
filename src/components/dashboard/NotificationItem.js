@@ -2,8 +2,11 @@ import React from 'react'
 import { Card } from 'react-bootstrap'
 
 export const NotificationItem = (notify) => {
+  const { tipo, mensaje } = notify
+
   return (
     <Card
+      // bg={tipo}
       // bg="success"
       // bg="danger"
       bg="info"
@@ -12,7 +15,7 @@ export const NotificationItem = (notify) => {
     >
       <Card.Body>
         <Card.Title>Titulo</Card.Title>
-        <Card.Text className="text-white">mensaje</Card.Text>
+        <Card.Text className="text-white">{mensaje}</Card.Text>
       </Card.Body>
     </Card>
   )

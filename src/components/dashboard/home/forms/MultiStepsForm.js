@@ -11,8 +11,6 @@ import { useDispatch } from 'react-redux'
 
 moment.locale('es')
 
-const now = moment()
-
 export const MultiStepsForm = () => {
   const dispatch = useDispatch()
   const [step, setStep] = useState(1)
@@ -24,7 +22,7 @@ export const MultiStepsForm = () => {
   const [formValues1, handleInputChange1, reset1] = useForm({
     desde: '',
     hasta: '',
-    fecha: now.toDate()
+    fecha: ''
   })
 
   const [formValues2, handleInputChange2, reset2] = useForm({

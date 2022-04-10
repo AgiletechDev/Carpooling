@@ -20,7 +20,7 @@ export const Form2 = ({
       valid = valid && false
     } else setPrecioValid(true)
 
-    if (asientos.trim().length < 1 || Number(asientos.trim()) < 0) {
+    if (asientos.trim().length < 1 || Number(asientos.trim()) <= 0) {
       setAsientosValid(false)
       valid = valid && false
     } else setAsientosValid(true)

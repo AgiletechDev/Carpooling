@@ -29,9 +29,13 @@ export const NotificationScreen = () => {
       </Offcanvas.Header>
       <Offcanvas.Body>
         <div>
-          {notifications.map((item) => (
-            <NotificationItem key={item} />
-          ))}
+          {notifications.length !== 0 ? (
+            notifications.map((item) => (
+              <NotificationItem key={item} {...item} />
+            ))
+          ) : (
+            <p className="text-center">No tienes notificaciones</p>
+          )}
         </div>
       </Offcanvas.Body>
     </Offcanvas>

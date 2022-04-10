@@ -11,8 +11,6 @@ import 'moment/locale/es'
 moment.locale('es')
 registerLocale('es', es)
 
-const now = moment()
-
 export const Form1 = ({ setStep, formValues1, handleInputChange1 }) => {
   const [desdeValid, setDesdeValid] = useState(true)
   const [hastaValid, setHastaValid] = useState(true)
@@ -34,7 +32,7 @@ export const Form1 = ({ setStep, formValues1, handleInputChange1 }) => {
       valid = valid && false
     } else setHastaValid(true)
 
-    if (selectedDate.isBefore(now)) {
+    if (!moment.isDate(fecha) || selectedDate.isBefore(moment())) {
       setFechaValid(false)
       valid = valid && false
     } else setFechaValid(true)
@@ -45,8 +43,6 @@ export const Form1 = ({ setStep, formValues1, handleInputChange1 }) => {
   const handleSubmit1 = (e) => {
     e.preventDefault()
     const isValid = validateForm1()
-
-    console.log(fecha)
 
     if (isValid) {
       setStep(2)
@@ -159,6 +155,7 @@ export const Form1 = ({ setStep, formValues1, handleInputChange1 }) => {
           showYearDropdown
           dropdownMode="select"
           selected={fecha}
+          placeholderText="Fecha y hora"
           showTimeSelect
           timeIntervals={15}
           onChange={handleDateChange}

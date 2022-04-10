@@ -12,7 +12,7 @@ export const PorconfirmarList = () => {
           <ViajesItem key={item.uid} {...item} inlist />
         ))
       ) : (
-        <p>Sin viajes por confirmar</p>
+        <p className="text-center">Sin viajes por confirmar</p>
       )}
     </div>
   )

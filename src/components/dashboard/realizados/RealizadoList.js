@@ -19,7 +19,7 @@ export const RealizadoList = () => {
           <ViajesItem key={item.uid} {...item} realizado />
         ))
       ) : (
-        <p>Sin viajes realizados</p>
+        <p className="text-center">Sin viajes realizados</p>
       )}
     </div>
   )
