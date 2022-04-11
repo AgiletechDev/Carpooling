@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import moment from 'moment'
+import { Autocomplete } from '@react-google-maps/api'
 import DatePicker, { registerLocale } from 'react-datepicker'
 import es from 'date-fns/locale/es'
 import 'moment/locale/es'
@@ -7,12 +8,20 @@ import 'moment/locale/es'
 moment.locale('es')
 registerLocale('es', es)
 
-export const Form1 = ({ setStep, formValues1, handleInputChange1 }) => {
+export const Form1 = ({
+  setStep,
+  formValues1,
+  handleInputChange1,
+  isLoaded
+}) => {
   const [desdeValid, setDesdeValid] = useState(true)
   const [hastaValid, setHastaValid] = useState(true)
   const [fechaValid, setFechaValid] = useState(true)
 
   const { desde, hasta, fecha } = formValues1
+
+  const desdeRef = useRef()
+  const hastaRef = useRef()
 
   const validateForm1 = () => {
     let valid = true
@@ -54,34 +63,60 @@ export const Form1 = ({ setStep, formValues1, handleInputChange1 }) => {
     })
   }
 
+  const handleDesdePlaceChange = () => {
+    handleInputChange1({
+      target: {
+        name: 'desde',
+        value: desdeRef.current.value
+      }
+    })
+  }
+
+  const handleHastaPlaceChange = () => {
+    handleInputChange1({
+      target: {
+        name: 'hasta',
+        value: hastaRef.current.value
+      }
+    })
+  }
+
+  if (!isLoaded) return null
+
   return (
     <form onSubmit={handleSubmit1}>
       <h3 className="mb-3">Encuentro</h3>
 
       <div className="form-group text-start mb-2">
         <label className="form-label">Desde</label>
-        <input
-          type="text"
-          className={`form-control ${!desdeValid && 'is-invalid'}`}
-          placeholder="Desde"
-          name="desde"
-          value={desde}
-          onChange={handleInputChange1}
-          autoComplete="off"
-        />
+        <Autocomplete onPlaceChanged={handleDesdePlaceChange}>
+          <input
+            type="text"
+            className={`form-control ${!desdeValid && 'is-invalid'}`}
+            placeholder="Desde"
+            name="desde"
+            value={desde}
+            ref={desdeRef}
+            onChange={handleInputChange1}
+            autoComplete="off"
+          />
+        </Autocomplete>
       </div>
 
       <div className="form-group text-start mb-2">
         <label className="form-label">Hasta</label>
-        <input
-          type="text"
-          className={`form-control ${!hastaValid && 'is-invalid'}`}
-          placeholder="Hasta"
-          name="hasta"
-          value={hasta}
-          onChange={handleInputChange1}
-          autoComplete="off"
-        />
+        <Autocomplete onPlaceChanged={handleHastaPlaceChange}>
+          <input
+            type="text"
+            className={`form-control ${!hastaValid && 'is-invalid'}`}
+            placeholder="Hasta"
+            name="hasta"
+            value={hasta}
+            ref={hastaRef}
+            onChange={handleInputChange1}
+            autoComplete="off"
+          />
+        </Autocomplete>
       </div>
 
       <div className="form-group text-start mb-4">

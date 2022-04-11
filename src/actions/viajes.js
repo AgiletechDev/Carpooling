@@ -41,7 +41,6 @@ export const buscarViajes = (filters) => {
       const resp = await fetchConToken('viajes/')
       const body = await resp.json()
       const viajes = prepareViajes(body.viajes)
-      console.log(viajes)
       const viajesFiltered = viajes.filter((viaje) => {
         if (
           !viaje.listaespera.includes(uid) &&
