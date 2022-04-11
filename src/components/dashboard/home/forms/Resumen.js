@@ -18,7 +18,7 @@ export const Resumen = ({
   const [directionsResponse, setDirectionsResponse] = useState(null)
   const center = { lat: -12.03331904021834, lng: -77.04477899516831 }
 
-  const calculateRoute = async () => {
+  const calculateRoute = async (desde, hasta) => {
     if (desde === '' || hasta === '') return
     // eslint-disable-next-line no-undef
     const directionService = new google.maps.DirectionsService()
@@ -31,8 +31,8 @@ export const Resumen = ({
     setDirectionsResponse(results)
   }
   useEffect(() => {
-    calculateRoute()
-  }, [])
+    calculateRoute(desde, hasta)
+  }, [desde, hasta])
 
   return (
     <>
