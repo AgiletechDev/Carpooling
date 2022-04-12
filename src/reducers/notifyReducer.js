@@ -13,7 +13,7 @@ export const notifyReducer = (state = initState, action) => {
     case types.notifyAdd:
       return {
         ...state,
-        notifications: [...state.notifications, ...action.payload]
+        notifications: [...state.notifications, action.payload]
       }
 
     default:

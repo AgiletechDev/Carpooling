@@ -73,7 +73,6 @@ const guardarBusqueda = (viajes) => ({
 export const startSolicitarUnirse = () => {
   return async (dispatch, getState) => {
     const { activeViaje } = getState().trip
-    const { uid: id } = getState().auth
     const { uid } = activeViaje
     const resp = await fetchConToken(`viajes/joinviaje/${uid}`, {}, 'PUT')
     const body = await resp.json()
@@ -81,18 +80,7 @@ export const startSolicitarUnirse = () => {
     body.joined.inlist = true
     if (body.ok) {
       dispatch(solicitarUnirse(body.joined))
-      dispatch(
-        addNotification({
-          titulo: 'Solicitud de asiento',
-          tipo: 'info',
-          mensaje: `Has solicitado unirte al viaje ${activeViaje.desde} - ${
-            activeViaje.hasta
-          }, Fecha : ${moment(activeViaje.fecha).format(
-            'MMMM Do YYYY, h:mm:ss a'
-          )}`,
-          destinatario: id
-        })
-      )
+      dispatch(addNotification(body.notyPasajero))
       Swal.fire('Success', 'Solicitud enviada', 'success')
     } else {
       Swal.fire('Error', body.msg, 'error')
