@@ -9,6 +9,7 @@ export const types = {
   viajesLoadLista: '[Trip] Cargando lista de espera',
   viajesGuardar: '[Trip] Guardar busqueda de vaijes',
   viajesSolicitarUnirse: '[Trip] Solitar unirse a viaje',
+  viajesCancelarSolicitud: '[Trip] Cancelar solicitud',
   viajesDelete: '[Trip] Delete viaje',
   viajesSetActive: '[Trip] Set Active Trip',
   viajesClearActive: '[Trip] Clear Active Trip',
@@ -24,5 +25,6 @@ export const types = {
   uiOpenNotifications: '[Ui] Open Notifications',
   uiCloseNotifcations: '[Ui] Close Notifications',
 
-  notifyLoad: '[Notify] Loading notifications'
+  notifyLoad: '[Notify] Loading notifications',
+  notifyAdd: '[Notify] Add notification'
 }

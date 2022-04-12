@@ -17,3 +17,8 @@ const loadNotifications = (notificaciones) => ({
   type: types.notifyLoad,
   payload: notificaciones
 })
+
+export const addNotification = (notify) => ({
+  type: types.notifyAdd,
+  payload: notify
+})

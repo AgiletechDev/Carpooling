@@ -69,6 +69,14 @@ export const tripReducer = (state = initialState, action) => {
         )
       }
 
+    case types.viajesCancelarSolicitud:
+      return {
+        ...state,
+        listaEspera: state.listaEspera.filter(
+          (viaje) => viaje.uid !== action.payload
+        )
+      }
+
     case types.viajesConfirmar:
       return {
         ...state,

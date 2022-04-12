@@ -4,6 +4,7 @@ import moment from 'moment'
 import { fetchConToken } from '../helpers/fetch'
 import { prepareViaje, prepareViajes } from '../helpers/prepareViajes'
 import { types } from '../types/types'
+import { addNotification } from './notify'
 
 const now = moment()
 
@@ -72,6 +73,7 @@ const guardarBusqueda = (viajes) => ({
 export const startSolicitarUnirse = () => {
   return async (dispatch, getState) => {
     const { activeViaje } = getState().trip
+    const { uid: id } = getState().auth
     const { uid } = activeViaje
     const resp = await fetchConToken(`viajes/joinviaje/${uid}`, {}, 'PUT')
     const body = await resp.json()
@@ -79,6 +81,18 @@ export const startSolicitarUnirse = () => {
     body.joined.inlist = true
     if (body.ok) {
       dispatch(solicitarUnirse(body.joined))
+      dispatch(
+        addNotification({
+          titulo: 'Solicitud de asiento',
+          tipo: 'info',
+          mensaje: `Has solicitado unirte al viaje ${activeViaje.desde} - ${
+            activeViaje.hasta
+          }, Fecha : ${moment(activeViaje.fecha).format(
+            'MMMM Do YYYY, h:mm:ss a'
+          )}`,
+          destinatario: id
+        })
+      )
       Swal.fire('Success', 'Solicitud enviada', 'success')
     } else {
       Swal.fire('Error', body.msg, 'error')
@@ -89,6 +103,28 @@ export const startSolicitarUnirse = () => {
 const solicitarUnirse = (viaje) => ({
   type: types.viajesSolicitarUnirse,
   payload: viaje
+})
+
+export const startCancelarSolicitud = () => {
+  return async (dispatch, getState) => {
+    const { activeViaje } = getState().trip
+    const { uid } = activeViaje
+    const resp = await fetchConToken(`viajes/disjoinviaje/${uid}`, {}, 'PUT')
+    const body = await resp.json()
+    body.disjoined.joined = false
+    body.disjoined.inlist = false
+    if (body.ok) {
+      dispatch(cancelarSolicitud(body.disjoined.uid))
+      Swal.fire('Success', 'Solicitud cancelada', 'success')
+    } else {
+      Swal.fire('Error', body.msg, 'error')
+    }
+  }
+}
+
+const cancelarSolicitud = (id) => ({
+  type: types.viajesCancelarSolicitud,
+  payload: id
 })
 
 export const startAceptarSolicitud = (id) => {

@@ -31,7 +31,7 @@ export const NotificationScreen = () => {
         <div>
           {notifications.length !== 0 ? (
             notifications.map((item) => (
-              <NotificationItem key={item} {...item} />
+              <NotificationItem key={item.id} {...item} />
             ))
           ) : (
             <p className="text-center">No tienes notificaciones</p>

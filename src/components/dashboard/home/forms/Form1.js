@@ -89,7 +89,10 @@ export const Form1 = ({
 
       <div className="form-group text-start mb-2">
         <label className="form-label">Desde</label>
-        <Autocomplete onPlaceChanged={handleDesdePlaceChange}>
+        <Autocomplete
+          options={{ componentRestrictions: { country: 'pe' } }}
+          onPlaceChanged={handleDesdePlaceChange}
+        >
           <input
             type="text"
             className={`form-control ${!desdeValid && 'is-invalid'}`}
@@ -105,7 +108,10 @@ export const Form1 = ({
 
       <div className="form-group text-start mb-2">
         <label className="form-label">Hasta</label>
-        <Autocomplete onPlaceChanged={handleHastaPlaceChange}>
+        <Autocomplete
+          options={{ componentRestrictions: { country: 'pe' } }}
+          onPlaceChanged={handleHastaPlaceChange}
+        >
           <input
             type="text"
             className={`form-control ${!hastaValid && 'is-invalid'}`}

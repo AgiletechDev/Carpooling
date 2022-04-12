@@ -9,6 +9,7 @@ import 'moment/locale/es'
 import { closeDetallesModal } from '../../../actions/ui'
 import {
   clearActiveViaje,
+  startCancelarSolicitud,
   startDeleteViaje,
   startSolicitarUnirse
 } from '../../../actions/viajes'
@@ -33,6 +34,11 @@ export const DetallesModal = () => {
 
   const handleSolicitarUnirse = () => {
     dispatch(startSolicitarUnirse())
+    dispatch(closeDetallesModal())
+  }
+
+  const handleCancelarSolicitud = () => {
+    dispatch(startCancelarSolicitud())
     dispatch(closeDetallesModal())
   }
 
@@ -72,11 +78,15 @@ export const DetallesModal = () => {
       </Modal.Body>
 
       <Modal.Footer>
-        {rol === 'USER_ROLE' && (!!activeViaje ? !activeViaje.joined : true) ? (
+        {rol === 'USER_ROLE' && (!!activeViaje ? !activeViaje.inlist : true) ? (
           <Button variant="success" onClick={handleSolicitarUnirse}>
             Solicitar unirse
           </Button>
-        ) : null}
+        ) : (
+          <Button variant="danger" onClick={handleCancelarSolicitud}>
+            Cancelar solicitud
+          </Button>
+        )}
 
         {rol === 'CONDUCTOR_ROLE' ? (
           <Button variant="danger" onClick={handleDeleteViaje}>
