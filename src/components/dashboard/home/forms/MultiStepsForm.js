@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useJsApiLoader } from '@react-google-maps/api'
 import moment from 'moment'
 import 'moment/locale/es'
 
@@ -12,15 +11,8 @@ import { startCrearViaje } from '../../../../actions/viajes'
 
 moment.locale('es')
 
-const libraries = (process.env.REACT_APP_GOOGLE_LIBRARIES || '').split(',')
-
-export const MultiStepsForm = () => {
+export const MultiStepsForm = ({ isLoaded }) => {
   const dispatch = useDispatch()
-
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
-    libraries: libraries
-  })
 
   const [step, setStep] = useState(1)
 

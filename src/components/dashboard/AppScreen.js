@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Tab, Tabs } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
+import { useJsApiLoader } from '@react-google-maps/api'
 
 import { startGetViajes } from '../../actions/viajes'
 import { ArealizarList } from './arealizar/ArealizarList'
@@ -11,10 +12,12 @@ import { RealizadoList } from './realizados/RealizadoList'
 import { DetallesModal } from './modals/DetallesModal'
 import { EditarModal } from './modals/EditarModal'
 import { SolicitudesModal } from './modals/SolicitudesModal'
-
-import './app.css'
 import { NotificationScreen } from './NotificationScreen'
 import { startLoadingNotifications } from '../../actions/notify'
+
+import './app.css'
+
+const libraries = (process.env.REACT_APP_GOOGLE_LIBRARIES || '').split(',')
 
 export const AppScreen = () => {
   const dispatch = useDispatch()
@@ -27,6 +30,11 @@ export const AppScreen = () => {
     dispatch(startLoadingNotifications())
   }, [dispatch])
 
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
+    libraries: libraries
+  })
+
   return (
     <>
       <div className="container mt-5 pb-5 app-container rounded shadow">
@@ -35,7 +43,11 @@ export const AppScreen = () => {
             eventKey="home"
             title={rol === 'CONDUCTOR_ROLE' ? 'Crear' : 'Buscar'}
           >
-            {rol === 'CONDUCTOR_ROLE' ? <CrearScreen /> : <BuscarScreen />}
+            {rol === 'CONDUCTOR_ROLE' ? (
+              <CrearScreen isLoaded={isLoaded} />
+            ) : (
+              <BuscarScreen />
+            )}
           </Tab>
           <Tab eventKey="realizados" title="Realizados">
             <RealizadoList />
@@ -51,7 +63,7 @@ export const AppScreen = () => {
         </Tabs>
       </div>
 
-      <DetallesModal />
+      <DetallesModal isLoaded={isLoaded} />
       <EditarModal />
       <SolicitudesModal />
       <NotificationScreen />

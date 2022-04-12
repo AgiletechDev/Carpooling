@@ -30,9 +30,11 @@ export const Resumen = ({
     })
     setDirectionsResponse(results)
   }
+
   useEffect(() => {
     calculateRoute(desde, hasta)
-  }, [desde, hasta])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>
