@@ -10,6 +10,7 @@ export const types = {
   viajesGuardar: '[Trip] Guardar busqueda de vaijes',
   viajesSolicitarUnirse: '[Trip] Solitar unirse a viaje',
   viajesCancelarSolicitud: '[Trip] Cancelar solicitud',
+  viajesUpdate: '[Trip] Update viaje',
   viajesDelete: '[Trip] Delete viaje',
   viajesSetActive: '[Trip] Set Active Trip',
   viajesClearActive: '[Trip] Clear Active Trip',

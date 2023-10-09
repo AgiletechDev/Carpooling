@@ -1,6 +1,7 @@
 import moment from 'moment'
 
 export const prepareViajes = (viajes = [], uid) => {
+  console.log(viajes)
   return viajes.map((e) => {
     if (e.pasajeros.includes(uid))
       return {

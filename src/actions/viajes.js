@@ -12,12 +12,14 @@ export const startGetViajes = () => {
   return async (dispatch, getState) => {
     try {
       const { uid } = getState().auth
-      const resp = await fetchConToken('viajes/misviajes')
+      const resp = await fetchConToken('/viajes')
       const body = await resp.json()
-      const viajes = prepareViajes(body.viajes, uid)
-      const lista = prepareViajes(body.porconfirmar, uid)
-      dispatch(loadViajes(viajes))
-      dispatch(loadListaEspera(lista))
+      console.log(body)
+      /* const viajes = prepareViajes(body.trips, uid)
+      console.log(viajes) */
+      /* const lista = prepareViajes(body.porconfirmar, uid) */
+      dispatch(loadViajes(body.trips))
+      /* dispatch(loadListaEspera(lista)) */
     } catch (error) {
       console.log(error)
     }
@@ -39,9 +41,13 @@ export const buscarViajes = (filters) => {
     try {
       const { uid } = getState().auth
       const { desde, hasta, fecha } = filters
-      const resp = await fetchConToken('viajes/')
+      const data = {
+        destinationName: hasta
+      }
+      const resp = await fetchConToken(`viajes/buscar-viaje`, data ,'POST')
       const body = await resp.json()
-      const viajes = prepareViajes(body.viajes)
+      /* const viajes = prepareViajes(body.trips)
+      console.log(viajes)
       const viajesFiltered = viajes.filter((viaje) => {
         if (
           !viaje.listaespera.includes(uid) &&
@@ -58,7 +64,8 @@ export const buscarViajes = (filters) => {
             : viaje.fecha === fecha
         else return false
       })
-      dispatch(guardarBusqueda(viajesFiltered))
+      dispatch(guardarBusqueda(viajesFiltered)) */
+      dispatch(guardarBusqueda(body.trips)) 
     } catch (error) {
       console.log(error)
     }
@@ -73,17 +80,18 @@ const guardarBusqueda = (viajes) => ({
 export const startSolicitarUnirse = () => {
   return async (dispatch, getState) => {
     const { activeViaje } = getState().trip
-    const { uid } = activeViaje
+    const { vi_id: uid } = activeViaje
     const resp = await fetchConToken(`viajes/joinviaje/${uid}`, {}, 'PUT')
     const body = await resp.json()
+    console.log(body)
     body.joined.joined = false
     body.joined.inlist = true
     if (body.ok) {
       dispatch(solicitarUnirse(body.joined))
-      dispatch(addNotification(body.notyPasajero))
-      Swal.fire('Success', 'Solicitud enviada', 'success')
+      //dispatch(addNotification(body.notyPasajero))
+      Swal.fire('Success', body.joined.message, 'success')
     } else {
-      Swal.fire('Error', body.msg, 'error')
+      Swal.fire('Error', body.joined.message, 'error')
     }
   }
 }
@@ -96,16 +104,16 @@ const solicitarUnirse = (viaje) => ({
 export const startCancelarSolicitud = () => {
   return async (dispatch, getState) => {
     const { activeViaje } = getState().trip
-    const { uid } = activeViaje
-    const resp = await fetchConToken(`viajes/disjoinviaje/${uid}`, {}, 'PUT')
-    const body = await resp.json()
+    const { vi_id: uid } = activeViaje
+    const resp = await fetchConToken(`viajes/disjoinviaje/${uid}`, {}, 'PUT');
+    const body = await resp.json();
     body.disjoined.joined = false
     body.disjoined.inlist = false
     if (body.ok) {
       dispatch(cancelarSolicitud(body.disjoined.uid))
-      Swal.fire('Success', 'Solicitud cancelada', 'success')
+      Swal.fire('Success', body.disjoined.message, 'success')
     } else {
-      Swal.fire('Error', body.msg, 'error')
+      Swal.fire('Error', body.disjoined.message, 'error')
     }
   }
 }
@@ -143,12 +151,33 @@ const aceptarSolicitud = (solicitud) => ({
 export const startCrearViaje = (viaje) => {
   return async (dispatch, getState) => {
     const { uid, rol } = getState().auth
+    console.log(uid, rol)
     viaje.owner = uid
     viaje.rol = rol
-    const resp = await fetchConToken('viajes/', viaje, 'POST')
+    console.log(viaje)
+    const data = {
+      // trip
+      seats: Number(viaje.asientos),
+      automaticReservation: viaje.automaticReservation || false,
+      allowedFood: viaje.automaticReservation || true,
+      allowedMate: viaje.automaticReservation || true,
+      car: viaje.vehiculo,
+      details: viaje.detalles,
+      // city,
+      name_origin_city: viaje.desde,
+      price:Number(viaje.precio),
+      date: viaje.fecha,
+      name_destination_city: viaje.hasta,
+      //owner
+      owner: uid,
+      role: viaje.rol
+    }
+    const resp = await fetchConToken('viajes/', data, 'POST')
+    //console.log('resp', resp)
     const body = await resp.json()
-    if (body.ok) {
-      dispatch(crearViaje(body.viaje))
+    //console.log('body',body)
+    if (body.trip) {
+      dispatch(crearViaje(body.trip))
       Swal.fire('Success', 'Viaje creado', 'success')
     } else {
       Swal.fire('Error', body.msg, 'error')
@@ -174,6 +203,12 @@ export const clearActiveViaje = () => ({
   type: types.viajesClearActive
 })
 
+
+const deleteViaje = (uid) => ({
+  type: types.viajesDelete,
+  payload: uid
+})
+
 export const startDeleteViaje = () => {
   return async (dispatch, getState) => {
     const { activeViaje } = getState().trip
@@ -189,7 +224,34 @@ export const startDeleteViaje = () => {
   }
 }
 
-const deleteViaje = (uid) => ({
-  type: types.viajesDelete,
-  payload: uid
+
+const updateViaje = (viaje) => ({
+  type: types.viajesUpdate,
+  payload: viaje
 })
+
+export const startUpdateViaje = (viaje) => {
+  return async (dispatch, getState) => {
+    const { activeViaje } = getState().trip
+    const { vi_id: uid } = activeViaje
+    console.log(viaje)
+    const data = {
+      //name_origin_city: viaje.desde,
+      price:Number(viaje.precio),
+      date: viaje.fecha,
+      name_destination_city: viaje.hasta,
+    }
+    const resp = await fetchConToken(`viajes/${uid}`, data, 'PUT')
+    console.log('resp', resp)
+    const body = await resp.json()
+    console.log('body',body)
+    if (body.trip) {
+      dispatch(updateViaje(body.trip))
+      Swal.fire('Success', 'Viaje creado', 'success')
+    } else {
+      Swal.fire('Error', body.msg, 'error')
+    }
+  }
+}
+
+  

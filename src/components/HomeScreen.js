@@ -65,7 +65,7 @@ export const HomeScreen = () => {
             <p className="h2 text-primary">¿Cansado de viajar solo?</p>
             <ul className="list-unstyled text-primary text-center">
               <li>Conoce nueva gente</li>
-              <li>Convierte tu vieja más</li>
+              <li>Convierte tu viaje más</li>
               <li>divertido y economico.</li>
             </ul>
           </div>

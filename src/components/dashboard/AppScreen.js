@@ -17,24 +17,29 @@ import { startLoadingNotifications } from '../../actions/notify'
 
 import './app.css'
 
-const libraries = (process.env.REACT_APP_GOOGLE_LIBRARIES || '').split(',')
+// const libraries = (process.env.REACT_APP_GOOGLE_LIBRARIES || '').split(',')
+const libraries = ["places"]
 
 export const AppScreen = () => {
   const dispatch = useDispatch()
-  const { rol } = useSelector((state) => state.auth)
+  const { rol } = useSelector((state) => {
+    console.log(state.auth)
+    return state.auth
+  })
 
   const [key, setKey] = useState('home')
 
   useEffect(() => {
     dispatch(startGetViajes())
-    dispatch(startLoadingNotifications())
+    /* dispatch(startLoadingNotifications()) */
   }, [dispatch])
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
     libraries: libraries
   })
-
+  console.log(isLoaded)
+  console.log(rol)
   return (
     <>
       <div className="container mt-5 pb-5 app-container rounded shadow">
@@ -65,7 +70,7 @@ export const AppScreen = () => {
 
       <DetallesModal isLoaded={isLoaded} />
       <EditarModal />
-      <SolicitudesModal />
+      {/* <SolicitudesModal /> */}
       <NotificationScreen />
     </>
   )

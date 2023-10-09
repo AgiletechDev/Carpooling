@@ -1,6 +1,7 @@
 const baseUrl = process.env.REACT_APP_API_URL
 
 const fetchSinToken = (endpoint, data, method = 'GET') => {
+
   const url = `${baseUrl}/${endpoint}`
 
   if (method === 'GET') {
@@ -19,12 +20,11 @@ const fetchSinToken = (endpoint, data, method = 'GET') => {
 const fetchConToken = (endpoint, data, method = 'GET') => {
   const url = `${baseUrl}/${endpoint}`
   const token = localStorage.getItem('token') || ''
-
   if (method === 'GET') {
     return fetch(url, {
       method,
       headers: {
-        'x-token': token
+        'Authorization': 'Bearer ' + token
       }
     })
   } else {
@@ -32,7 +32,7 @@ const fetchConToken = (endpoint, data, method = 'GET') => {
       method,
       headers: {
         'Content-type': 'application/json',
-        'x-token': token
+        'Authorization': 'Bearer ' + token
       },
       body: JSON.stringify(data)
     })

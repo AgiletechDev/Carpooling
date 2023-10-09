@@ -60,7 +60,8 @@ export const DetallesModal = ({ isLoaded }) => {
   }
 
   useEffect(() => {
-    if (!!activeViaje) calculateRoute(activeViaje.desde, activeViaje.hasta)
+    console.log('modal detalles', activeViaje)
+    if (!!activeViaje) calculateRoute(/* activeViaje.desde */'Lima', activeViaje.ci_nombre)
   }, [activeViaje])
 
   return (
@@ -74,7 +75,7 @@ export const DetallesModal = ({ isLoaded }) => {
           <p>
             <AiOutlineClockCircle />{' '}
             {!!activeViaje
-              ? moment(activeViaje.fecha).format('D MMMM YYYY, h:mm a')
+              ? moment(activeViaje.ci_fecha).format('D MMMM YYYY, h:mm a')
               : ''}
           </p>
         </div>
@@ -105,20 +106,20 @@ export const DetallesModal = ({ isLoaded }) => {
         <div className="row mt-2">
           <p>Información del auto</p>
           <p>
-            <FaDollarSign /> {!!activeViaje ? activeViaje.precio : ''}
+            <FaDollarSign /> {!!activeViaje ? activeViaje.ci_precio : ''}
           </p>
           <p>Por pasajero</p>
           <p>
-            <FaRegUser /> {!!activeViaje ? activeViaje.asientos : ''}
+            <FaRegUser /> {!!activeViaje ? activeViaje.vi_asiento : ''}
           </p>
           <p>
-            <FaCar /> {!!activeViaje ? activeViaje.vehiculo : ''}
+            <FaCar /> {!!activeViaje ? activeViaje.vi_carro : ''}
           </p>
           <p>Detalles</p>
           <p>
             {!!activeViaje
-              ? activeViaje.detalles !== ''
-                ? activeViaje.detalles
+              ? activeViaje.vi_detalle !== ''
+                ? activeViaje.vi_detalle
                 : 'Sin detalles'
               : ''}
           </p>

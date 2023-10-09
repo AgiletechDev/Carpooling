@@ -25,29 +25,30 @@ export const RegisterScreen = () => {
   const [fechaNacimientoValid, setFechaNacimientoValid] = useState(true)
   const [passwordValid, setPasswordValid] = useState(true)
   const [formValues, handleInputChange] = useForm({
-    nombre: '',
-    correo: '',
+    firstname: '',
+    surname: 'empty',
+    email: '',
     nickname: '',
-    fechaNacimiento: '',
+    date_of_birth: '',
     password: '',
     password2: '',
-    rol: 'USER_ROLE'
+    role: 'USER_ROLE'
   })
 
   const {
-    nombre,
-    correo,
+    firstname,
+    email,
     nickname,
-    fechaNacimiento,
+    date_of_birth,
     password,
     password2,
-    rol
+    role
   } = formValues
 
   const handleDateChange = (e) => {
     handleInputChange({
       target: {
-        name: 'fechaNacimiento',
+        name: 'date_of_birth',
         value: e
       }
     })
@@ -55,14 +56,14 @@ export const RegisterScreen = () => {
 
   const validateForm = () => {
     let valid = true
-    const selectedDate = moment(fechaNacimiento)
+    const selectedDate = moment(date_of_birth)
 
-    if (nombre.trim().length < 2) {
+    if (firstname.trim().length < 2) {
       setNameValid(false)
       valid = valid && false
     } else setNameValid(true)
 
-    if (!validator.isEmail(correo)) {
+    if (!validator.isEmail(email)) {
       setCorreoValid(false)
       valid = valid && false
     } else setCorreoValid(true)
@@ -93,6 +94,7 @@ export const RegisterScreen = () => {
     const isValid = validateForm()
 
     if (isValid) {
+      delete formValues.password2
       dispatch(startRegister(formValues))
     } else return
   }
@@ -110,8 +112,8 @@ export const RegisterScreen = () => {
                 type="text"
                 className={`form-control ${!nameValid && 'is-invalid'}`}
                 placeholder="Enter name"
-                name="nombre"
-                value={nombre}
+                name="firstname"
+                value={firstname}
                 onChange={handleInputChange}
                 autoComplete="off"
               />
@@ -123,8 +125,8 @@ export const RegisterScreen = () => {
                 type="email"
                 className={`form-control ${!correoValid && 'is-invalid'}`}
                 placeholder="Enter email"
-                name="correo"
-                value={correo}
+                name="email"
+                value={email}
                 onChange={handleInputChange}
                 autoComplete="off"
               />
@@ -155,7 +157,7 @@ export const RegisterScreen = () => {
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                selected={fechaNacimiento}
+                selected={date_of_birth}
                 placeholderText="Fecha de Nacimiento"
                 onChange={handleDateChange}
               />
@@ -189,8 +191,8 @@ export const RegisterScreen = () => {
               <label className="form-label">Type of user</label>
               <select
                 className="form-select"
-                name="rol"
-                defaultValue={rol}
+                name="role"
+                defaultValue={role}
                 onChange={handleInputChange}
               >
                 <option value="USER_ROLE">Pasajero</option>

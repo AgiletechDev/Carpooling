@@ -22,7 +22,7 @@ export const authReducer = (state = initState, action) => {
     case types.authUpdate:
       return {
         ...state,
-        rol: action.payload.rol,
+        role: action.payload.role,
         data: action.payload
       }
 

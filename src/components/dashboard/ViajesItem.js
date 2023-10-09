@@ -15,7 +15,15 @@ import { setActiveViaje } from '../../actions/viajes'
 export const ViajesItem = (viaje) => {
   const dispatch = useDispatch()
   const { rol } = useSelector((state) => state.auth)
-  const { asientos, desde, fecha, hasta, precio, vehiculo, realizado } = viaje
+  const { 
+    vi_asiento: asientos, 
+    //desde, 
+    ci_fecha: fecha, 
+    ci_nombre: hasta, 
+    ci_precio: precio, 
+    vi_carro: vehiculo, 
+    //realizado 
+  } = viaje
   const date = moment(fecha)
 
   const handleOpenDetalles = () => {
@@ -45,9 +53,9 @@ export const ViajesItem = (viaje) => {
               <p>
                 <AiOutlineClockCircle /> {date.format('D MMMM YYYY, h:mm a')}
               </p>
-              <p>
+             {/*  <p>
                 <FaMapMarkerAlt /> {desde}
-              </p>
+              </p> */}
               <p>
                 <FaMapMarkerAlt /> {hasta}
               </p>
@@ -74,8 +82,8 @@ export const ViajesItem = (viaje) => {
           >
             Detalles
           </button>
-
-          {rol === 'CONDUCTOR_ROLE' && !realizado ? (
+                                {/* && !realizado */}
+          {rol === 'CONDUCTOR_ROLE'  ? (
             <>
               <button
                 type="button"

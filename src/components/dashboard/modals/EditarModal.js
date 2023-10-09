@@ -7,7 +7,7 @@ import moment from 'moment'
 import 'moment/locale/es'
 
 import { closeEditarModal } from '../../../actions/ui'
-import { clearActiveViaje } from '../../../actions/viajes'
+import { clearActiveViaje, startUpdateViaje } from '../../../actions/viajes'
 
 moment.locale('es')
 registerLocale('es', es)
@@ -94,7 +94,7 @@ export const EditarModal = () => {
   const handleEditar = (e) => {
     e.preventDefault()
     const isValid = validateForm()
-    if (isValid) console.log(formValues)
+    if (isValid) dispatch(startUpdateViaje(formValues))
   }
 
   return (

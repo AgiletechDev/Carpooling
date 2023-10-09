@@ -50,7 +50,7 @@ export const tripReducer = (state = initialState, action) => {
     case types.viajesDelete:
       return {
         ...state,
-        viajes: state.viajes.filter((viaje) => viaje.uid !== action.payload),
+        viajes: state.viajes.filter((viaje) => viaje.vi_id !== action.payload),
         activeViaje: null
       }
 
@@ -65,7 +65,7 @@ export const tripReducer = (state = initialState, action) => {
         ...state,
         listaEspera: [...state.listaEspera, action.payload],
         busqueda: state.busqueda.filter(
-          (viaje) => viaje.uid !== action.payload.uid
+          (viaje) => viaje.vi_id !== action.payload.vi_id
         )
       }
 
@@ -73,7 +73,7 @@ export const tripReducer = (state = initialState, action) => {
       return {
         ...state,
         listaEspera: state.listaEspera.filter(
-          (viaje) => viaje.uid !== action.payload
+          (viaje) => viaje.vi_id !== action.payload
         )
       }
 
@@ -81,13 +81,22 @@ export const tripReducer = (state = initialState, action) => {
       return {
         ...state,
         viajes: state.viajes.map((viaje) => {
-          if (viaje.uid === action.payload.uid) {
-            viaje.asientos = action.payload.asientos
+          if (viaje.vi_id === action.payload.vi_id) {
+            viaje.vi_asiento = action.payload.vi_asiento
             viaje.listaespera = action.payload.listaespera
             viaje.pasajeros = action.payload.pasajeros
           }
           return viaje
         }),
+        activeViaje: action.payload
+      }
+
+    case types.viajesUpdate:
+      return {
+        ...state,
+        viajes: state.viajes.map((viaje) =>
+          viaje.vi_id === action.payload.vi_id ? action.payload : viaje
+        ),
         activeViaje: action.payload
       }
 

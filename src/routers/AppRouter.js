@@ -11,15 +11,15 @@ import { PublicRoute } from './PublicRoute'
 
 export const AppRouter = () => {
   const dispatch = useDispatch()
-  const { checking } = useSelector((state) => state.auth)
+  // const { checking } = useSelector((state) => state.auth)
 
   useEffect(() => {
     dispatch(startChecking())
   }, [dispatch])
 
-  if (checking) {
+  /* if (checking) {
     return <h5>Espere...</h5>
-  }
+  } */
 
   return (
     <BrowserRouter>

@@ -6,6 +6,7 @@ import { ViajesItem } from '../ViajesItem'
 
 export const RealizadoList = () => {
   const { viajes } = useSelector((state) => state.trip)
+  console.log(viajes)
   const now = moment()
   const realizados = viajes.filter((item) => {
     const date = moment(item.fecha)
