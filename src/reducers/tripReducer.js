@@ -70,11 +70,15 @@ export const tripReducer = (state = initialState, action) => {
       }
 
     case types.viajesCancelarSolicitud:
+      const tripToCancel = state.listaEspera.find(
+        (viaje) => viaje.vi_id === Number(action.payload)
+      );
       return {
         ...state,
         listaEspera: state.listaEspera.filter(
-          (viaje) => viaje.vi_id !== action.payload
-        )
+          (viaje) => viaje.vi_id !== Number(action.payload)
+        ),
+        busqueda: [...state.busqueda, tripToCancel],
       }
 
     case types.viajesConfirmar:

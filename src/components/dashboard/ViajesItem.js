@@ -15,6 +15,7 @@ import { setActiveViaje } from '../../actions/viajes'
 export const ViajesItem = (viaje) => {
   const dispatch = useDispatch()
   const { rol } = useSelector((state) => state.auth)
+  console.log(viaje)
   const { 
     vi_asiento: asientos, 
     //desde, 

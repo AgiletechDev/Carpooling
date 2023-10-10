@@ -8,7 +8,7 @@ export const SolicitudItem = (solicitud) => {
   const dispatch = useDispatch()
 
   const handleConfirmar = () => {
-    dispatch(startAceptarSolicitud(solicitud._id))
+    dispatch(startAceptarSolicitud(solicitud.us_id))
   }
 
   const handleRechazar = () => {
@@ -19,7 +19,7 @@ export const SolicitudItem = (solicitud) => {
     <Card style={{ width: '22rem' }} className="shadow-sm m-3 bg-body rounded">
       <Card.Body>
         <Row>
-          <Col>{solicitud.nombre} solicito unirse!</Col>
+          <Col>{solicitud.us_nombre} solicito unirse!</Col>
         </Row>
       </Card.Body>
       <Card.Footer className="d-flex justify-content-evenly">

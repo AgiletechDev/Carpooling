@@ -15,11 +15,12 @@ export const startGetViajes = () => {
       const resp = await fetchConToken('/viajes')
       const body = await resp.json()
       console.log(body)
-      /* const viajes = prepareViajes(body.trips, uid)
-      console.log(viajes) */
-      /* const lista = prepareViajes(body.porconfirmar, uid) */
-      dispatch(loadViajes(body.trips))
-      /* dispatch(loadListaEspera(lista)) */
+      const viajes = prepareViajes(body.trips, uid)
+      console.log(viajes)
+      const viajesPorConfirmar = viajes.filter((trip) => trip.pa_estado === 'PENDIENTE')
+      const lista = prepareViajes(viajesPorConfirmar, uid)
+      dispatch(loadViajes(viajes))
+      dispatch(loadListaEspera(lista))
     } catch (error) {
       console.log(error)
     }
@@ -84,14 +85,15 @@ export const startSolicitarUnirse = () => {
     const resp = await fetchConToken(`viajes/joinviaje/${uid}`, {}, 'PUT')
     const body = await resp.json()
     console.log(body)
-    body.joined.joined = false
-    body.joined.inlist = true
+    
     if (body.ok) {
-      dispatch(solicitarUnirse(body.joined))
+      body.trip.joined = false
+      body.trip.inlist = true
+      dispatch(solicitarUnirse(body.trip))
       //dispatch(addNotification(body.notyPasajero))
-      Swal.fire('Success', body.joined.message, 'success')
+      Swal.fire('Success', body.message, 'success')
     } else {
-      Swal.fire('Error', body.joined.message, 'error')
+      Swal.fire('Error', body.message, 'error')
     }
   }
 }
@@ -109,6 +111,7 @@ export const startCancelarSolicitud = () => {
     const body = await resp.json();
     body.disjoined.joined = false
     body.disjoined.inlist = false
+    console.log(body)
     if (body.ok) {
       dispatch(cancelarSolicitud(body.disjoined.uid))
       Swal.fire('Success', body.disjoined.message, 'success')
@@ -126,19 +129,19 @@ const cancelarSolicitud = (id) => ({
 export const startAceptarSolicitud = (id) => {
   return async (dispatch, getState) => {
     const { activeViaje } = getState().trip
-    const { uid } = activeViaje
+    const { vi_id: uid } = activeViaje
     const resp = await fetchConToken(
       `viajes/addpasajero/${uid}`,
       { pasajero: id },
       'PUT'
     )
     const body = await resp.json()
-    const viaje = prepareViaje(body.disjoined)
+    const viaje = prepareViaje(body.trip)
     if (body.ok) {
       dispatch(aceptarSolicitud(viaje))
-      Swal.fire('Success', 'Solicitud aceptada', 'success')
+      Swal.fire('Success', body.message, 'success')
     } else {
-      Swal.fire('Error', body.msg, 'error')
+      Swal.fire('Error', body.message, 'error')
     }
   }
 }
@@ -173,9 +176,7 @@ export const startCrearViaje = (viaje) => {
       role: viaje.rol
     }
     const resp = await fetchConToken('viajes/', data, 'POST')
-    //console.log('resp', resp)
     const body = await resp.json()
-    //console.log('body',body)
     if (body.trip) {
       dispatch(crearViaje(body.trip))
       Swal.fire('Success', 'Viaje creado', 'success')

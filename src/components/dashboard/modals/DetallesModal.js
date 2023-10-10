@@ -21,7 +21,7 @@ export const DetallesModal = ({ isLoaded }) => {
   const dispatch = useDispatch()
   const { rol } = useSelector((state) => state.auth)
   const { showDetalles } = useSelector((state) => state.ui)
-  const { activeViaje } = useSelector((state) => state.trip)
+  const { activeViaje, listaEspera } = useSelector((state) => state.trip)
   const [directionsResponse, setDirectionsResponse] = useState(null)
 
   const center = { lat: -12.03331904021834, lng: -77.04477899516831 }
@@ -59,10 +59,17 @@ export const DetallesModal = ({ isLoaded }) => {
     setDirectionsResponse(results)
   }
 
+  const [isInList, setIsInList] = useState(false)
   useEffect(() => {
     console.log('modal detalles', activeViaje)
     if (!!activeViaje) calculateRoute(/* activeViaje.desde */'Lima', activeViaje.ci_nombre)
-  }, [activeViaje])
+    let prueba
+    for (const item of listaEspera) {
+      if(activeViaje?.vi_id === Number(item.vi_id)) prueba = true
+    }
+    console.log(prueba)
+    setIsInList(prueba)
+  }, [activeViaje, listaEspera])
 
   return (
     <Modal show={showDetalles} onHide={closeDetalles} centered>
@@ -128,7 +135,7 @@ export const DetallesModal = ({ isLoaded }) => {
 
       <Modal.Footer>
         {rol === 'USER_ROLE' ? (
-          (!!activeViaje ? !activeViaje.inlist : true) ? (
+          (!isInList) ? (
             <Button variant="success" onClick={handleSolicitarUnirse}>
               Solicitar unirse
             </Button>

@@ -3,24 +3,24 @@ import moment from 'moment'
 export const prepareViajes = (viajes = [], uid) => {
   console.log(viajes)
   return viajes.map((e) => {
-    if (e.pasajeros.includes(uid))
+    if (e.pa_estado === 'ACEPTADO')
       return {
         ...e,
-        fecha: moment(e.fecha).toDate(),
+        ci_fecha: moment(e.ci_fecha).toDate(),
         joined: true,
         inlist: false
       }
-    else if (e.listaespera.includes(uid))
+    else if (e.pa_estado === 'PENDIENTE')
       return {
         ...e,
-        fecha: moment(e.fecha).toDate(),
+        ci_fecha: moment(e.ci_fecha).toDate(),
         joined: false,
         inlist: true
       }
     else
       return {
         ...e,
-        fecha: moment(e.fecha).toDate(),
+        ci_fecha: moment(e.ci_fecha).toDate(),
         joined: false,
         inlist: false
       }
@@ -30,7 +30,7 @@ export const prepareViajes = (viajes = [], uid) => {
 export const prepareViaje = (viaje = {}, uid) => {
   return {
     ...viaje,
-    fecha: moment(viaje.fecha).toDate(),
+    ci_fecha: moment(viaje.ci_fecha).toDate(),
     joined: false,
     inlist: false
   }
