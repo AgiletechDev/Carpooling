@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, Col, Row } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 
-import { startAceptarSolicitud } from '../../actions/viajes'
+import { startAceptarSolicitud, startRechazarSolicitud } from '../../actions/viajes'
 
 export const SolicitudItem = (solicitud) => {
   const dispatch = useDispatch()
@@ -13,6 +13,7 @@ export const SolicitudItem = (solicitud) => {
 
   const handleRechazar = () => {
     //TODO: dispatch de rechazar
+    dispatch(startRechazarSolicitud(solicitud.us_id))
   }
 
   return (

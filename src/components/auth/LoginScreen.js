@@ -92,7 +92,7 @@ export const LoginScreen = () => {
 
           <div className="mt-5">
             <hr />
-            <h5 className="mb-3">Ingresa con</h5>
+            {/* <h5 className="mb-3">Ingresa con</h5>
             <GoogleLogin
               clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
               render={(renderProps) => (
@@ -104,7 +104,7 @@ export const LoginScreen = () => {
               onSuccess={handleGoogleLogin}
               onFailure={handleGoogleFail}
               cookiePolicy={'single_host_origin'}
-            />
+            /> */}
 
             <p className="text-end mt-3">
               Aun no tienes una cuenta?{' '}

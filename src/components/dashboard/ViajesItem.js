@@ -23,7 +23,7 @@ export const ViajesItem = (viaje) => {
     ci_nombre: hasta, 
     ci_precio: precio, 
     vi_carro: vehiculo, 
-    //realizado 
+    realizado 
   } = viaje
   const date = moment(fecha)
 
@@ -83,8 +83,8 @@ export const ViajesItem = (viaje) => {
           >
             Detalles
           </button>
-                                {/* && !realizado */}
-          {rol === 'CONDUCTOR_ROLE'  ? (
+                                
+          {rol === 'CONDUCTOR_ROLE' && !realizado ? (
             <>
               <button
                 type="button"

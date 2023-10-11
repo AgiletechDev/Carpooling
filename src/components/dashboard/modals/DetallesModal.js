@@ -3,7 +3,7 @@ import { Button, Modal } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { AiOutlineClockCircle } from 'react-icons/ai'
 import { FaCar, FaDollarSign, FaRegUser } from 'react-icons/fa'
-import { DirectionsRenderer, GoogleMap } from '@react-google-maps/api'
+import { DirectionsRenderer, GoogleMap, Marker } from '@react-google-maps/api'
 import moment from 'moment'
 import 'moment/locale/es'
 
@@ -21,7 +21,7 @@ export const DetallesModal = ({ isLoaded }) => {
   const dispatch = useDispatch()
   const { rol } = useSelector((state) => state.auth)
   const { showDetalles } = useSelector((state) => state.ui)
-  const { activeViaje, listaEspera } = useSelector((state) => state.trip)
+  const { activeViaje, listaEspera, viajes } = useSelector((state) => state.trip)
   const [directionsResponse, setDirectionsResponse] = useState(null)
 
   const center = { lat: -12.03331904021834, lng: -77.04477899516831 }
@@ -49,7 +49,7 @@ export const DetallesModal = ({ isLoaded }) => {
   const calculateRoute = async (desde, hasta) => {
     if (desde === '' || hasta === '') return
     // eslint-disable-next-line no-undef
-    const directionService = new google.maps.DirectionsService()
+    const directionService = new gogle.maps.DirectionsService()
     const results = await directionService.route({
       origin: desde,
       destination: hasta,
@@ -61,15 +61,16 @@ export const DetallesModal = ({ isLoaded }) => {
 
   const [isInList, setIsInList] = useState(false)
   useEffect(() => {
-    console.log('modal detalles', activeViaje)
     if (!!activeViaje) calculateRoute(/* activeViaje.desde */'Lima', activeViaje.ci_nombre)
     let prueba
     for (const item of listaEspera) {
       if(activeViaje?.vi_id === Number(item.vi_id)) prueba = true
     }
-    console.log(prueba)
+    for (const item of viajes) {
+      if(activeViaje?.vi_id === item.vi_id) prueba = true
+    }
     setIsInList(prueba)
-  }, [activeViaje, listaEspera])
+  }, [activeViaje, listaEspera, viajes])
 
   return (
     <Modal show={showDetalles} onHide={closeDetalles} centered>
@@ -101,7 +102,7 @@ export const DetallesModal = ({ isLoaded }) => {
                   fullscreenControl: false
                 }}
               >
-                {/* <Marker position={center} /> */}
+                <Marker position={center} />
                 {directionsResponse && (
                   <DirectionsRenderer directions={directionsResponse} />
                 )}
@@ -111,7 +112,7 @@ export const DetallesModal = ({ isLoaded }) => {
         </div>
 
         <div className="row mt-2">
-          <p>Información del auto</p>
+          <p>Información del Viaje</p>
           <p>
             <FaDollarSign /> {!!activeViaje ? activeViaje.ci_precio : ''}
           </p>

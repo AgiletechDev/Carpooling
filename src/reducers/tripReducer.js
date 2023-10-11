@@ -95,6 +95,7 @@ export const tripReducer = (state = initialState, action) => {
         activeViaje: action.payload
       }
 
+
     case types.viajesUpdate:
       return {
         ...state,

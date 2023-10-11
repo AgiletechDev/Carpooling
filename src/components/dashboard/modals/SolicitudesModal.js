@@ -18,7 +18,7 @@ export const SolicitudesModal = () => {
   }
 
   useEffect(() => {
-    fetchConToken(`viajes/usuariosPendientes/${activeViaje?.vi_id}`)
+    activeViaje && fetchConToken(`viajes/usuariosPendientes/${activeViaje?.vi_id}`)
     .then(resp => resp.json())
     .then(body => {
       setPendingUsers(body.users)

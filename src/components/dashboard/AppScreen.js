@@ -23,7 +23,6 @@ const libraries = ["places"]
 export const AppScreen = () => {
   const dispatch = useDispatch()
   const { rol } = useSelector((state) => {
-    console.log(state.auth)
     return state.auth
   })
 
@@ -36,10 +35,9 @@ export const AppScreen = () => {
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
-    libraries: libraries
+    libraries
   })
-  console.log(isLoaded)
-  console.log(rol)
+
   return (
     <>
       <div className="container mt-5 pb-5 app-container rounded shadow">

@@ -7,9 +7,9 @@ export const PorconfirmarList = () => {
 
   return (
     <div className="row row-cols-lg-3 g-3">
-      {listaEspera.length !== 0 ? (
-        listaEspera.map((item) => (
-          <ViajesItem key={item.uid} {...item} inlist />
+      {!!listaEspera && listaEspera?.length !== 0 ? (
+        listaEspera?.map((item) => (
+          <ViajesItem key={item.vi_id} {...item} inlist />
         ))
       ) : (
         <p className="text-center">Sin viajes por confirmar</p>

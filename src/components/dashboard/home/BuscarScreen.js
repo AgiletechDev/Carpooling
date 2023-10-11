@@ -102,13 +102,18 @@ export const BuscarScreen = () => {
         </div>
       </div>
 
-      {!!busqueda ? (
+      {!!busqueda && busqueda.length !== 0  ? (
         <div className="row row-cols-lg-3 g-3 mt-2">
-          {busqueda.map((item) => (
-            <ViajesItem key={item.uid} {...item} />
-          ))}
+          {busqueda?.map((item) => {
+            if(item) return <ViajesItem key={item.vi_id} {...item} />
+            return null
+          })}
         </div>
-      ) : null}
+      ) : (
+        <div className="d-flex justify-content-center align-items-center" style={{ height: '20vh' }}>
+          <p className="text-muted">No hay resultados</p>
+        </div>
+      )}
     </>
   )
 }
